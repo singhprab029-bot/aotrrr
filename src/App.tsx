@@ -9,7 +9,6 @@ import { ItemHistory } from './types/Item';
 
 const TradeCalculator = lazy(() => import('./components/TradeCalculator').then(m => ({ default: m.TradeCalculator })));
 const ValueChangesPage = lazy(() => import('./components/ValueChangesPage').then(m => ({ default: m.ValueChangesPage })));
-const ValueGuesser = lazy(() => import('./components/ValueGuesser').then(m => ({ default: m.ValueGuesser })));
 const TradeAdsPage = lazy(() => import('./components/TradeAdsPage').then(m => ({ default: m.TradeAdsPage })));
 const ScamLogsPage = lazy(() => import('./components/ScamLogsPage').then(m => ({ default: m.ScamLogsPage })));
 const AdminPage = lazy(() => import('./components/AdminPage').then(m => ({ default: m.AdminPage })));
@@ -101,8 +100,6 @@ const AppContent: React.FC = () => {
         return <Suspense fallback={<LoadingFallback />}><TradeCalculator items={items} /></Suspense>;
       case 'value-changes':
         return <Suspense fallback={<LoadingFallback />}><ValueChangesPage /></Suspense>;
-      case 'value-guesser':
-        return <Suspense fallback={<LoadingFallback />}><ValueGuesser items={items} /></Suspense>;
       case 'trade-ads':
         return <Suspense fallback={<LoadingFallback />}><TradeAdsPage items={items} /></Suspense>;
       case 'scam-logs':
@@ -159,45 +156,33 @@ const AppContent: React.FC = () => {
                   <p className="text-gray-400 mb-4">
                     Attack on Titan Revolution Values (UPDATED)
                   </p>
-                  <div className="flex justify-center space-x-6">
+                  <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
                     <a
                       href="https://discord.gg/aotrvalues"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base"
                     >
                       Discord Community
                     </a>
                     <button
                       onClick={() => handlePageChange('value-changes')}
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base"
                     >
                       Value Changes
                     </button>
                     <button
-                      onClick={() => handlePageChange('value-guesser')}
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
-                    >
-                      Value Guesser
-                    </button>
-                    <button
                       onClick={() => handlePageChange('trade-ads')}
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base"
                     >
                       Trade Ads
                     </button>
                     <button
                       onClick={() => handlePageChange('scam-logs')}
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base"
                     >
                       Scam Logs
                     </button>
-                    <a
-                      href="#"
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
-                    >
-                      Updates
-                    </a>
                   </div>
                   <div className="mt-6 pt-6 border-t border-gray-800">
                     <p className="text-gray-500 text-sm">
