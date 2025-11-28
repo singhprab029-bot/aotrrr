@@ -92,7 +92,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
             modeState === "regular" ? "bg-blue-600 text-white" : "text-gray-300"
           }`}
         >
-          Keys
+          Key
         </button>
 
         <button
