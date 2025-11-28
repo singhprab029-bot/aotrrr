@@ -1,23 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { Item } from "../types/Item";
 
-// --- UK Reset Logic ---
-function getNextResetTime(): number {
+// Calculates next shop reset (00:00 / 06:00 / 12:00 / 18:00 London time)
+const getNextResetTime = () => {
   const now = new Date();
-  const ukNow = new Date(now.toLocaleString("en-GB", { timeZone: "Europe/London" }));
-  const resetHours = [0, 6, 12, 18];
-  const next = new Date(ukNow);
 
-  for (let h of resetHours) {
-    next.setHours(h, 0, 0, 0);
-    if (next > ukNow) return next.getTime();
-  }
+  // London timezone (handles DST)
+  const londonNow = new Date(
+    now.toLocaleString("en-GB", { timeZone: "Europe/London" })
+  );
 
-  next.setDate(next.getDate() + 1);
-  next.setHours(0, 0, 0, 0);
+  const hour = londonNow.getHours();
+  const nextResetHour =
+    hour < 6 ? 6 :
+    hour < 12 ? 12 :
+    hour < 18 ? 18 :
+    24; // midnight
 
-  return next.getTime();
-}
+  const next = new Date(londonNow);
+  next.setHours(nextResetHour, 0, 0, 0);
+
+  return next;
+};
+
+const getRemainingTimeString = (target: Date) => {
+  const now = new Date();
+
+  const diff = target.getTime() - now.getTime();
+  if (diff <= 0) return "0h 0m 0s";
+
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  return `${h}h ${m}m ${s}s`;
+};
+
 
 interface Props {
   items: Item[];
