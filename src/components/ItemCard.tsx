@@ -69,9 +69,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
       {/* Name & Status */}
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-white font-bold text-lg">{item.name}</h2>
-        <span className={`px-3 py-1 text-xs rounded-full border font-semibold ${getStatusColor(item.status)}`}>
-          {item.status}
-        </span>
       </div>
 
       {/* Icon */}
