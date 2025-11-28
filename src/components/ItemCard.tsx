@@ -39,14 +39,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
       ? "text-red-400"
       : "text-yellow-400";
 
-  // Status (Obtainable / Unobtainable)
-  const getStatusColor = (s: string) =>
-    s === "Unobtainable"
-      ? "bg-red-900/70 text-red-200 border-red-700"
-      : s === "Limited"
-      ? "bg-yellow-900/70 text-yellow-200 border-yellow-700"
-      : "bg-green-900/70 text-green-200 border-green-700";
-
   // Tax (gold or gems)
   const tax = item.gemTax
     ? { label: "Gem Tax", icon: "💎", value: item.gemTax, color: "text-purple-300" }
