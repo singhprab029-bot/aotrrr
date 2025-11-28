@@ -89,7 +89,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
             modeState === "regular" ? "bg-blue-600 text-white" : "text-gray-300"
           }`}
         >
-          Regular
+          Key
         </button>
         <button
           onClick={() => setModeState("permanent")}
@@ -97,7 +97,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
             modeState === "permanent" ? "bg-blue-600 text-white" : "text-gray-300"
           }`}
         >
-          Permanent
+          Vizard Mask
         </button>
       </div>
       {/* Stats */}
