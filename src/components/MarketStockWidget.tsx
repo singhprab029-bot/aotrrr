@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Item } from "../types/Item";
 
 export const MarketStockWidget: React.FC<{ items: Item[] }> = ({ items }) => {
-  // Pick 4 random obtainable items
-  const obtainableItems = items.filter((i) => i.status !== "Unobtainable");
-  const stock = obtainableItems.slice(0, 4); // temporary
+  // Choose 4 obtainable items
+  const obtainable = items.filter((i) => i.status !== "Unobtainable");
 
-  // ------------------------------
-  // 🚨 FIXED RESET TIME FUNCTION
-  // ------------------------------
-  const getNextResetTime = () => {
+  const randomStock = obtainable.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+  const [stock] = useState(randomStock);
+  const [countdown, setCountdown] = useState("Loading...");
+
+  // --------------------------------------
+  // FIXED: Get next reset time every 6 hours
+  // 00:00, 06:00, 12:00, 18:00 LONDON TIME
+  // --------------------------------------
+  const getNextReset = () => {
     const now = new Date();
 
-    // Get time in LONDON (handles DST automatically)
     const londonNow = new Date(
       now.toLocaleString("en-GB", { timeZone: "Europe/London" })
     );
 
     const hour = londonNow.getHours();
-
-    // Next shop refresh hour (00, 06, 12, 18)
     const nextHour =
       hour < 6 ? 6 :
       hour < 12 ? 12 :
@@ -32,69 +34,71 @@ export const MarketStockWidget: React.FC<{ items: Item[] }> = ({ items }) => {
     return next;
   };
 
-  // ------------------------------
-  // 🚨 FIXED COUNTDOWN CALCULATION
-  // ------------------------------
-  const formatCountdown = (target: Date) => {
+  const [nextReset, setNextReset] = useState<Date | null>(null);
+
+  // --------------------------------------
+  // FIXED COUNTDOWN CALCULATOR — NO NAN EVER
+  // --------------------------------------
+  const updateCountdown = () => {
+    if (!nextReset) return setCountdown("Loading...");
+
     const now = new Date();
-    const diff = target.getTime() - now.getTime();
+    const diff = nextReset.getTime() - now.getTime();
 
-    if (diff <= 0) return "0h 0m 0s";
+    if (diff <= 0) {
+      // Regenerate next reset time
+      const newReset = getNextReset();
+      setNextReset(newReset);
+      return setCountdown("0h 0m 0s");
+    }
 
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
 
-    return `${hours}h ${minutes}m ${seconds}s`;
+    setCountdown(`${h}h ${m}m ${s}s`);
   };
 
-  const [nextReset, setNextReset] = useState<Date>(getNextResetTime());
-  const [countdown, setCountdown] = useState<string>("");
-
-  // ------------------------------
-  // 🚨 FIXED LIVE TIMER
-  // ------------------------------
+  // --------------------------------------
+  // START TIMER
+  // --------------------------------------
   useEffect(() => {
-    const interval = setInterval(() => {
-      const timeLeft = formatCountdown(nextReset);
-      setCountdown(timeLeft);
+    setNextReset(getNextReset());
 
-      // If reset reached → generate next one
-      if (timeLeft === "0h 0m 0s") {
-        const newReset = getNextResetTime();
-        setNextReset(newReset);
-      }
-    }, 1000);
-
+    const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
   }, [nextReset]);
 
+  // --------------------------------------
+  // FIX: Proper Emoji Renderer for Item Icons
+  // --------------------------------------
+  const renderEmoji = (emoji: string) => {
+    if (!emoji) return <span className="text-3xl">❓</span>;
+
+    if (emoji.startsWith("/"))
+      return (
+        <img
+          src={emoji}
+          className="w-16 h-16 mx-auto object-contain"
+          alt="icon"
+        />
+      );
+
+    return <span className="text-4xl">{emoji}</span>;
+  };
+
   return (
-    <div className="bg-[#101522] border border-gray-700 rounded-2xl p-6 shadow-xl">
+    <div className="bg-[#0C111C] border border-gray-800 rounded-2xl p-6 shadow-xl">
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-white text-lg font-bold">Market Stock</h2>
-
-        <p className="text-blue-400 text-sm">
-          Refreshes in {countdown}
-        </p>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-white font-bold text-lg">Market Stock</h2>
+        <p className="text-blue-400 text-sm">Refreshes in {countdown}</p>
       </div>
 
-      {/* Item Grid */}
+      {/* Stock items */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stock.map((item) => (
           <div
             key={item.id}
-            className="bg-[#0D111A] border border-gray-700 rounded-xl p-3 text-center"
-          >
-            <div className="text-3xl mb-2">
-              {item.emoji}
-            </div>
-            <p className="text-white text-sm font-medium">{item.name}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+            className="bg-[#111827] border border-gray-700 rounded-xl p-4 text-
