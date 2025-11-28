@@ -73,8 +73,6 @@ export const Footer: React.FC = () => {
                     <Mail className="w-4 h-4" /> Contact Us
                   </a>
                 </li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400">Report Bug</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-blue-400">Feedback</a></li>
               </ul>
             </div>
 
