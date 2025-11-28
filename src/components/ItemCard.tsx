@@ -96,15 +96,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
           Permanent
         </button>
       </div>
-
-      {/* Value Box */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-4 text-center shadow-lg mb-4">
-        <p className="text-xs text-blue-100 mb-1">
-          {modeState === "regular" ? "REGULAR VALUE" : "PERMANENT VALUE"}
-        </p>
-        <p className="text-3xl font-extrabold text-white">🔑 {item.value.toLocaleString()}</p>
-      </div>
-
       {/* Stats */}
       {/* Stats - CLEAN COSMIC STYLE */}
 <div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
