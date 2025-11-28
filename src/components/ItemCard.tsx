@@ -1,150 +1,155 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { Item } from "../types/Item";
 
 interface ItemCardProps {
   item: Item;
+  mode: "regular" | "permanent"; // received from parent
 }
 
-export const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
-  const [mode, setMode] = useState<"regular" | "permanent">("regular");
+export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
+  const [modeState, setModeState] = useState<"regular" | "permanent">(mode);
 
-  // Demand Color
+  useEffect(() => {
+    setModeState(mode); // sync with global mode change
+  }, [mode]);
+
   const getDemandColor = (demand: number) => {
     if (demand <= 3) return "text-red-400";
     if (demand <= 6) return "text-yellow-400";
     return "text-green-400";
   };
 
-  // Trend Color
-  const getTrendColor = (trend: string) => {
-    if (trend === "Rising") return "text-green-400";
-    if (trend === "Falling") return "text-red-400";
-    if (trend === "Overpriced") return "text-yellow-400";
-    return "text-gray-300";
+  const getDemandBarColor = (demand: number) => {
+    if (demand <= 3) return "bg-red-400";
+    if (demand <= 6) return "bg-yellow-400";
+    return "bg-green-400";
   };
 
-  // Trend Icon
-  const getTrendIcon = (trend: string) => {
-    if (trend === "Rising") return <TrendingUp className="w-4 h-4 text-green-400" />;
-    if (trend === "Falling") return <TrendingDown className="w-4 h-4 text-red-400" />;
-    if (trend === "Overpriced") return <TrendingUp className="w-4 h-4 text-yellow-400" />;
+  const getRateIcon = (rate: string) => {
+    if (rate === "Rising") return <TrendingUp className="w-4 h-4 text-green-400" />;
+    if (rate === "Falling") return <TrendingDown className="w-4 h-4 text-red-400" />;
+    if (rate === "Overpriced") return <TrendingUp className="w-4 h-4 text-yellow-400" />;
     return <Minus className="w-4 h-4 text-gray-400" />;
   };
 
-  // Status Badge
-  const getStatusBadge = (status: string) => {
-    if (status === "Unobtainable")
-      return "bg-red-900/70 text-red-200 border-red-700";
-    if (status === "Limited")
-      return "bg-yellow-900/70 text-yellow-200 border-yellow-700";
+  const getRateColor = (rate: string) => {
+    if (rate === "Rising") return "text-green-400";
+    if (rate === "Falling") return "text-red-400";
+    if (rate === "Overpriced") return "text-yellow-400";
+    return "text-gray-300";
+  };
+
+  const getStatusColor = (status: string) => {
+    if (status === "Unobtainable") return "bg-red-900/70 text-red-200 border-red-700";
+    if (status === "Limited") return "bg-yellow-900/70 text-yellow-200 border-yellow-700";
     return "bg-green-900/70 text-green-200 border-green-700";
   };
 
-  // Tax
   const tax = item.gemTax
-    ? { label: "Gem Tax", emoji: "💎", color: "text-purple-300", value: item.gemTax }
+    ? { label: "Gem Tax", icon: "💎", value: item.gemTax, color: "text-purple-300" }
     : item.goldTax
-    ? { label: "Gold Tax", emoji: "🪙", color: "text-yellow-300", value: item.goldTax }
-    : { label: "Tax", emoji: "💰", color: "text-gray-400", value: 0 };
+    ? { label: "Gold Tax", icon: "🪙", value: item.goldTax, color: "text-yellow-300" }
+    : { label: "Tax", icon: "💰", value: 0, color: "text-gray-300" };
 
-  // Icon
-  const renderIcon = () => {
-    if (!item.emoji || typeof item.emoji !== "string")
-      return <span className="text-6xl">👹</span>;
-    if (item.emoji.startsWith("/"))
+  const renderIcon = (emoji: string) => {
+    if (!emoji || typeof emoji !== "string") return <span className="text-6xl">👹</span>;
+
+    if (emoji.startsWith("/"))
       return (
-        <img
-          src={item.emoji}
-          alt={item.name}
-          className="w-24 h-24 mx-auto object-contain pixelated"
-          style={{ imageRendering: "pixelated" }}
-        />
+        <img src={emoji} className="w-24 h-24 mx-auto object-contain pixelated" />
       );
-    return <span className="text-6xl">{item.emoji}</span>;
+
+    return <span className="text-6xl">{emoji}</span>;
   };
 
   return (
-    <div className="bg-[#06060A] border border-gray-800 rounded-2xl p-5 shadow-lg hover:border-blue-500 transition-all">
-      
-      {/* STATUS BADGE */}
-      <div className="flex justify-end">
-        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusBadge(item.status)}`}>
+    <div className="bg-[#06060A] rounded-2xl border border-gray-800 p-5 shadow-xl hover:border-blue-500 transition-all flex flex-col">
+
+      {/* Name & Status */}
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-white font-bold text-lg">{item.name}</h2>
+        <span className={`px-3 py-1 text-xs rounded-full border font-semibold ${getStatusColor(item.status)}`}>
           {item.status}
         </span>
       </div>
 
-      {/* ICON */}
-      <div className="flex justify-center mt-2 mb-3">{renderIcon()}</div>
+      {/* Icon */}
+      <div className="flex justify-center mb-4">{renderIcon(item.emoji)}</div>
 
-      {/* NAME */}
-      <h2 className="text-xl font-bold text-white text-center">{item.name}</h2>
-
-      {/* MODE */}
-      <div className="flex justify-center space-x-3 my-4">
+      {/* Mode Buttons */}
+      <div className="flex bg-gray-900 border border-gray-800 rounded-full w-max mx-auto mb-4">
         <button
-          onClick={() => setMode("regular")}
-          className={`px-4 py-1 rounded-full text-sm font-medium ${
-            mode === "regular" ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-300"
-          }`}>
+          onClick={() => setModeState("regular")}
+          className={`px-3 py-1 text-xs rounded-full ${
+            modeState === "regular" ? "bg-blue-600 text-white" : "text-gray-300"
+          }`}
+        >
           Regular
         </button>
         <button
-          onClick={() => setMode("permanent")}
-          className={`px-4 py-1 rounded-full text-sm font-medium ${
-            mode === "permanent" ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-300"
-          }`}>
+          onClick={() => setModeState("permanent")}
+          className={`px-3 py-1 text-xs rounded-full ${
+            modeState === "permanent" ? "bg-blue-600 text-white" : "text-gray-300"
+          }`}
+        >
           Permanent
         </button>
       </div>
 
-      {/* VALUE BOX – BFV STYLE */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-5 text-center shadow-lg mb-6">
-        <p className="text-xs text-blue-100 tracking-wide mb-1">
-          {mode === "regular" ? "REGULAR VALUE" : "PERMANENT VALUE"}
+      {/* Value Box */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-4 text-center shadow-lg mb-4">
+        <p className="text-xs text-blue-100 mb-1">
+          {modeState === "regular" ? "REGULAR VALUE" : "PERMANENT VALUE"}
         </p>
-        <div className="flex justify-center items-center space-x-2">
-          <span className="text-3xl">🔑</span>
-          <span className="text-4xl font-extrabold text-white">
-            {item.value.toLocaleString()}
-          </span>
-        </div>
+        <p className="text-3xl font-extrabold text-white">🔑 {item.value.toLocaleString()}</p>
       </div>
 
-      {/* STATS */}
-      <div className="space-y-4 text-sm">
+      {/* Stats */}
+      <div className="space-y-4">
 
-        {/* DEMAND */}
-        <div className="flex justify-between">
-          <span className="text-gray-300">📊 Demand</span>
-          <span className={`font-bold ${getDemandColor(item.demand)}`}>
-            {item.demand}/10
-          </span>
+        {/* Demand */}
+        <div>
+          <div className="flex justify-between text-sm">
+            <span className="text-gray-300">📊 Demand</span>
+            <span className={`font-semibold ${getDemandColor(item.demand)}`}>
+              {item.demand}/10
+            </span>
+          </div>
+          <div className="w-full bg-gray-800 rounded-full h-1.5 mt-1">
+            <div
+              className={`h-1.5 rounded-full ${getDemandBarColor(item.demand)}`}
+              style={{ width: `${(item.demand / 10) * 100}%` }}
+            />
+          </div>
         </div>
 
-        {/* TREND */}
-        <div className="flex justify-between">
+        {/* Trend */}
+        <div className="flex justify-between text-sm">
           <span className="text-gray-300">📈 Trend</span>
-          <span className={`flex items-center gap-1 font-bold ${getTrendColor(item.rateOfChange)}`}>
-            {getTrendIcon(item.rateOfChange)}
-            {item.rateOfChange}
-          </span>
+          <div className="flex items-center gap-1 font-semibold">
+            {getRateIcon(item.rateOfChange)}
+            <span className={getRateColor(item.rateOfChange)}>{item.rateOfChange}</span>
+          </div>
         </div>
 
-        {/* TAX */}
-        <div className="flex justify-between">
+        {/* Tax */}
+        <div className="flex justify-between text-sm">
           <span className="text-gray-300">{tax.label}</span>
-          <span className={`font-bold ${tax.color}`}>
-            {tax.value > 0 ? `${tax.emoji} ${tax.value.toLocaleString()}` : "None"}
-          </span>
+          {tax.value > 0 ? (
+            <span className={`font-semibold ${tax.color}`}>
+              {tax.icon} {tax.value.toLocaleString()}
+            </span>
+          ) : (
+            <span className="text-gray-400">None</span>
+          )}
         </div>
 
-        {/* PRESTIGE */}
-        <div className="flex justify-between">
+        {/* Prestige */}
+        <div className="flex justify-between text-sm">
           <span className="text-gray-300">🏅 Prestige</span>
-          <span className="text-purple-300 font-bold">{item.prestige}</span>
+          <span className="text-purple-300 font-semibold">{item.prestige}</span>
         </div>
-
       </div>
     </div>
   );
