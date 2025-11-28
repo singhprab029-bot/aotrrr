@@ -4,8 +4,10 @@ import { Item } from "../types/Item";
 
 interface ItemCardProps {
   item: Item;
-  mode: "regular" | "permanent"; // received from parent
+  mode: "regular" | "permanent";
+  vizardValue: number;   // 🔥 new prop
 }
+
 
 export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
   const [modeState, setModeState] = useState<"regular" | "permanent">(mode);
