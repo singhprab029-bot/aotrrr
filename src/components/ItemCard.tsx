@@ -121,17 +121,20 @@ const formatVizardValue = (v: number) => {
 <div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
 
   {/* VALUE */}
-  <div className="flex justify-between text-sm">
-    
-    <span className="text-gray-300 font-medium">Value</span>
+<div className="flex justify-between text-sm">
+  <span className="text-gray-300 font-medium">Value</span>
+
+  {modeState === "regular" ? (
     <span className="text-white font-bold">
-      {item.value >= 1_000_000_000
-        ? (item.value / 1_000_000_000).toFixed(2) + "B"
-        : item.value >= 1_000_000
-        ? (item.value / 1_000_000).toFixed(0) + "M"
-        : item.value.toLocaleString()}
+      {formatKeyValue(keysValue)}
     </span>
-  </div>
+  ) : (
+    <span className="text-purple-300 font-bold">
+      {formatVizardValue(vizardConverted)}
+    </span>
+  )}
+</div>
+
 
   {/* TREND */}
   <div className="flex justify-between text-sm">
