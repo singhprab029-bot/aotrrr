@@ -12,7 +12,7 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
     <div className="relative">
 
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-20 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/santa.png')] opacity-20 pointer-events-none"></div>
 
       {/* -------------------------------------- */}
       {/* HERO SECTION */}
