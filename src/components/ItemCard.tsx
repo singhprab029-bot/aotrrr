@@ -64,9 +64,24 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
   };
 
   // Final Values
-  const keysValue = item.value;
-  const vizardConverted =
-    vizardValue > 0 ? (item.value / vizardValue).toFixed(2) : "N/A";
+const keysValue = item.value;
+
+const vizardConverted =
+  vizardValue > 0 ? (item.value / vizardValue) : 0;
+
+// Formatter for Keys Mode
+const formatKeyValue = (v: number) => {
+  if (v >= 1_000_000_000) return (v / 1_000_000_000).toFixed(2) + "B";
+  if (v >= 1_000_000) return (v / 1_000_000).toFixed(0) + "M";
+  return v.toLocaleString();
+};
+
+// Formatter for Vizard Mode (no B/M — clean numbers)
+const formatVizardValue = (v: number) => {
+  if (!v || v <= 0) return "0";
+  return v % 1 === 0 ? v.toString() : v.toFixed(2); // remove .00
+};
+
 
   return (
     <div className="bg-[#06060A] rounded-2xl border border-gray-800 p-5 shadow-xl hover:border-blue-500 transition-all flex flex-col">
