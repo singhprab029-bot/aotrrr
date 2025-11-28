@@ -110,16 +110,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
 
   {/* VALUE */}
   <div className="flex justify-between text-sm">
-    <p className="text-xs text-blue-100 mb-1">
-          {modeState === "regular" ? "KEYS VALUE" : "VIZARD VALUE"}
-        </p>
-
-        <p className="text-3xl font-extrabold text-white">
-          🔑{" "}
-          {modeState === "regular"
-            ? keysValue.toLocaleString()
-            : vizardConverted}
-        </p>
+    
     <span className="text-gray-300 font-medium">Value</span>
     <span className="text-white font-bold">
       {item.value >= 1_000_000_000
