@@ -106,19 +106,17 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
 <div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
 
   {/* VALUE */}
-<div className="flex justify-between text-sm">
-  <span className="text-gray-300 font-medium">Value</span>
-
-  {modeState === "regular" ? (
+  <div className="flex justify-between text-sm">
+    
+    <span className="text-gray-300 font-medium">Value</span>
     <span className="text-white font-bold">
-      {formatKeyValue(keysValue)}
+      {item.value >= 1_000_000_000
+        ? (item.value / 1_000_000_000).toFixed(2) + "B"
+        : item.value >= 1_000_000
+        ? (item.value / 1_000_000).toFixed(0) + "M"
+        : item.value.toLocaleString()}
     </span>
-  ) : (
-    <span className="text-purple-300 font-bold">
-      {formatVizardValue(vizardConverted)}
-    </span>
-  )}
-</div>
+  </div>
 
   {/* TREND */}
   <div className="flex justify-between text-sm">
@@ -156,4 +154,4 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
 
     </div>
   );
-};
+}; this is my code to it to ti
