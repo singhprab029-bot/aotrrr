@@ -20,7 +20,7 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
       {/* Subtitle */}
       <p className="text-gray-400 max-w-2xl mx-auto mb-12">
         Browse and track accurate trading values for items in Attack on Titan Revolution.
-        Updated frequently based on real market activity and community demand.
+        Browse our comprehensive Attack on Titan Revolution value list with {items.length}+ items
       </p>
 
       {/* Default View Mode Toggle */}
