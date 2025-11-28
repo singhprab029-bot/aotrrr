@@ -36,7 +36,7 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
                 : "text-gray-300 hover:bg-gray-800"
             }`}
           >
-            Regular
+            Keys
           </button>
 
           <button
@@ -47,7 +47,7 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
                 : "text-gray-300 hover:bg-gray-800"
             }`}
           >
-            Permanent
+            Vizard
           </button>
         </div>
 
