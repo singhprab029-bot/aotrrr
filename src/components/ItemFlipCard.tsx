@@ -58,130 +58,105 @@ export const ItemFlipCard: React.FC<ItemFlipCardProps> = memo(({ item }) => {
     }
   };
 
-  const getTaxDisplay = (item: Item) => {
-    if (item.gemTax && item.gemTax > 0) {
-      return { label: "Gem Tax", emoji: "💎", value: item.gemTax, color: "text-purple-300" };
-    } else if (item.goldTax && item.goldTax > 0) {
-      return { label: "Gold Tax", emoji: "🪙", value: item.goldTax, color: "text-yellow-300" };
-    }
-    return { label: "Tax", emoji: "💸", value: 0, color: "text-gray-300" };
+  const getTax = () => {
+    if (item.gemTax && item.gemTax > 0)
+      return { icon: "💎", label: "Gem Tax", value: item.gemTax, color: "text-purple-300" };
+
+    if (item.goldTax && item.goldTax > 0)
+      return { icon: "🪙", label: "Gold Tax", value: item.goldTax, color: "text-yellow-300" };
+
+    return { icon: "💸", label: "Tax", value: 0, color: "text-gray-300" };
   };
+
+  const tax = getTax();
 
   const renderItemIcon = (emoji: string) => {
-    if (!emoji || typeof emoji !== "string") {
-      return <span className="text-4xl sm:text-5xl">👹</span>;
-    }
+    if (!emoji || typeof emoji !== "string")
+      return <span className="text-5xl">👹</span>;
 
-    if (emoji.startsWith("/")) {
+    if (emoji.startsWith("/"))
       return (
-        <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <img
-            src={emoji}
-            alt={item.name}
-            className="w-16 h-16 sm:w-20 sm:h-20 object-contain pixelated"
-            style={{ imageRendering: "pixelated" }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = "none";
-              const fallback = target.nextElementSibling as HTMLElement;
-              if (fallback) fallback.style.display = "block";
-            }}
-          />
-          <span className="text-4xl sm:text-5xl hidden">👹</span>
-        </div>
+        <img
+          src={emoji}
+          alt={item.name}
+          className="w-20 h-20 object-contain mx-auto"
+        />
       );
-    }
 
-    return <span className="text-4xl sm:text-5xl">{emoji}</span>;
+    return <span className="text-5xl">{emoji}</span>;
   };
 
-  const taxInfo = getTaxDisplay(item);
-
   return (
-    <div className="bg-[#050509] rounded-2xl border border-gray-800 hover:border-blue-500/80 transition-all duration-300 overflow-hidden flex flex-col shadow-lg hover:shadow-blue-500/20">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-800 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {renderItemIcon(item.emoji)}
-          <div className="text-left">
-            <h3 className="text-white font-bold text-lg leading-tight line-clamp-2">
-              {item.name}
-            </h3>
-            <p className="text-xs text-gray-400 mt-1">{item.category}</p>
-          </div>
+    <div className="bg-[#06060A] rounded-2xl border border-gray-800 hover:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-blue-500/20 p-4 flex flex-col">
+      
+      {/* ITEM HEADER */}
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <h3 className="text-white font-bold text-lg">{item.name}</h3>
+          <p className="text-xs text-gray-400">{item.category}</p>
         </div>
 
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(
-            item.status
-          )}`}
-        >
+        <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(item.status)}`}>
           {item.status}
         </span>
       </div>
 
-      {/* Mode Tabs */}
-      <div className="px-4 pt-3">
-        <div className="inline-flex bg-gray-900 rounded-full border border-gray-800 p-1 text-xs font-medium">
-          <button
-            onClick={() => setMode("regular")}
-            className={`px-3 py-1 rounded-full transition ${
-              mode === "regular" ? "bg-blue-600 text-white" : "text-gray-300"
-            }`}
-          >
-            Regular
-          </button>
-          <button
-            onClick={() => setMode("permanent")}
-            className={`px-3 py-1 rounded-full transition ${
-              mode === "permanent" ? "bg-blue-600 text-white" : "text-gray-300"
-            }`}
-          >
-            Permanent
-          </button>
-        </div>
+      {/* ICON */}
+      <div className="flex justify-center mb-4">
+        {renderItemIcon(item.emoji)}
       </div>
 
-      {/* Main Value */}
-      <div className="px-4 pt-4">
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-3 text-center shadow-md">
-          <p className="text-xs text-blue-100 mb-1 uppercase tracking-wide">
-            {mode === "regular" ? "Regular Value" : "Permanent Value"}
-          </p>
-          <p className="text-2xl sm:text-3xl font-extrabold text-white">
-            🔑 {item.value.toLocaleString()}
-          </p>
-        </div>
+      {/* MODE SELECTOR */}
+      <div className="flex bg-gray-900 border border-gray-800 rounded-full p-1 w-max mx-auto mb-4">
+        <button
+          onClick={() => setMode("regular")}
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            mode === "regular" ? "bg-blue-600 text-white" : "text-gray-300"
+          }`}
+        >
+          Regular
+        </button>
+        <button
+          onClick={() => setMode("permanent")}
+          className={`px-3 py-1 rounded-full text-xs font-medium ${
+            mode === "permanent" ? "bg-blue-600 text-white" : "text-gray-300"
+          }`}
+        >
+          Permanent
+        </button>
       </div>
 
-      {/* Stats Grid */}
-      <div className="px-4 py-4 space-y-3 text-sm">
-        {/* Demand */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-gray-300 flex items-center gap-1">
-            <span>📊</span>
-            <span>Demand</span>
-          </div>
-          <div className="text-right">
-            <p className={`font-semibold ${getDemandColor(item.demand)}`}>
-              {item.demand}/10
-            </p>
-            <div className="w-28 bg-gray-800 rounded-full h-1.5 mt-1 ml-auto">
-              <div
-                className={`h-1.5 rounded-full ${getDemandBarColor(item.demand)}`}
-                style={{ width: `${(item.demand / 10) * 100}%` }}
-              />
-            </div>
-          </div>
+      {/* VALUE */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl text-center p-4 shadow-lg mb-4">
+        <p className="text-xs text-blue-100 mb-1">REGULAR VALUE</p>
+        <p className="text-3xl font-extrabold text-white">🔑 {item.value.toLocaleString()}</p>
+      </div>
+
+      {/* STATS */}
+      <div className="space-y-3 text-sm">
+      
+        {/* DEMAND */}
+        <div className="flex items-center justify-between">
+          <span className="text-gray-300 flex items-center gap-1">
+            📊 Demand
+          </span>
+          <span className={`font-semibold ${getDemandColor(item.demand)}`}>
+            {item.demand}/10
+          </span>
+        </div>
+        <div className="w-full bg-gray-800 rounded-full h-1.5">
+          <div
+            className={`h-1.5 rounded-full ${getDemandBarColor(item.demand)}`}
+            style={{ width: `${(item.demand / 10) * 100}%` }}
+          />
         </div>
 
-        {/* Trend */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-gray-300 flex items-center gap-1">
-            <span>📈</span>
-            <span>Trend</span>
-          </div>
-          <div className="flex items-center gap-2">
+        {/* TREND */}
+        <div className="flex items-center justify-between">
+          <span className="text-gray-300 flex items-center gap-1">
+            📈 Trend
+          </span>
+          <div className="flex items-center gap-1">
             {getRateIcon(item.rateOfChange)}
             <span className={`font-semibold ${getRateColor(item.rateOfChange)}`}>
               {item.rateOfChange}
@@ -189,45 +164,26 @@ export const ItemFlipCard: React.FC<ItemFlipCardProps> = memo(({ item }) => {
           </div>
         </div>
 
-        {/* Tax */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-gray-300 flex items-center gap-1">
-            <span>💸</span>
-            <span>{taxInfo.label}</span>
-          </div>
-          <div className="text-right">
-            {taxInfo.value > 0 ? (
-              <span className={`font-semibold ${taxInfo.color}`}>
-                {taxInfo.emoji} {taxInfo.value.toLocaleString()}
-              </span>
-            ) : (
-              <span className="text-gray-400 text-sm">No tax</span>
-            )}
-          </div>
-        </div>
-
-        {/* Prestige */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-gray-300 flex items-center gap-1">
-            <span>🏅</span>
-            <span>Prestige</span>
-          </div>
-          <span className="font-semibold text-purple-300">
-            {item.prestige ?? 0}
+        {/* TAX */}
+        <div className="flex items-center justify-between">
+          <span className="text-gray-300 flex items-center gap-1">
+            💰 {tax.label}
           </span>
+          {tax.value > 0 ? (
+            <span className={`font-semibold ${tax.color}`}>
+              {tax.icon} {tax.value.toLocaleString()}
+            </span>
+          ) : (
+            <span className="text-gray-400">None</span>
+          )}
         </div>
-      </div>
 
-      {/* How to Obtain (small footer section) */}
-      <div className="px-4 pb-4">
-        <div className="bg-gray-900 rounded-lg border border-gray-800 p-3">
-          <p className="text-xs text-gray-400 mb-1 flex items-center gap-1">
-            <span>📦</span>
-            <span>Obtained From</span>
-          </p>
-          <p className="text-xs text-gray-200 line-clamp-2">
-            {item.obtainedFrom || "No info available."}
-          </p>
+        {/* PRESTIGE */}
+        <div className="flex items-center justify-between">
+          <span className="text-gray-300 flex items-center gap-1">
+            🏅 Prestige
+          </span>
+          <span className="text-purple-300 font-semibold">{item.prestige}</span>
         </div>
       </div>
     </div>
