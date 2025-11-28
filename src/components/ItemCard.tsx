@@ -57,7 +57,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
 
     if (emoji.startsWith("/"))
       return (
-        <img src={emoji} className="w-24 h-24 mx-auto object-contain pixelated" />
+        <img src={emoji} className="w-30 h-30 mx-auto object-contain pixelated" />
       );
 
     return <span className="text-6xl">{emoji}</span>;
