@@ -12,11 +12,6 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
   return (
     <div className="max-w-5xl mx-auto px-6 py-16 text-center">
 
-      {/* Updated Daily Badge */}
-      <div className="inline-block px-4 py-1 mb-6 rounded-full bg-purple-600/20 border border-purple-500 text-purple-300 text-sm">
-        🔄 Updated Daily
-      </div>
-
       {/* Title */}
       <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
         AOT:R Value List
