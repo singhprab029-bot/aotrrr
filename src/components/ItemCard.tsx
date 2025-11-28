@@ -105,9 +105,12 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
         </button>
       </div>
 
-      {/* VALUE BOX */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-4 text-center shadow-lg mb-4">
-        <p className="text-xs text-blue-100 mb-1">
+      {/* Stats - CLEAN COSMIC STYLE */}
+<div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
+
+  {/* VALUE */}
+  <div className="flex justify-between text-sm">
+    <p className="text-xs text-blue-100 mb-1">
           {modeState === "regular" ? "KEYS VALUE" : "VIZARD VALUE"}
         </p>
 
@@ -117,13 +120,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
             ? keysValue.toLocaleString()
             : vizardConverted}
         </p>
-      </div>
-
-      {/* Stats - CLEAN COSMIC STYLE */}
-<div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
-
-  {/* VALUE */}
-  <div className="flex justify-between text-sm">
     <span className="text-gray-300 font-medium">Value</span>
     <span className="text-white font-bold">
       {item.value >= 1_000_000_000
