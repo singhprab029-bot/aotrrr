@@ -154,4 +154,4 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
 
     </div>
   );
-}; this is my code to it to ti
+}; 
