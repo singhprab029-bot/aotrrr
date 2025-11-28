@@ -2,21 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Item } from "../types/Item";
 import { FAQSection } from "./FAQSection";
+import { MarketStockWidget } from "./MarketStockWidget";
 
 interface HomeProps {
   items: Item[];
 }
 
 export const Home: React.FC<HomeProps> = ({ items }) => {
-  const heroImages = [
-    "/hero1.png",
-    "/hero2.png",
-    "/hero3.png",
-  ];
-
+  const heroImages = ["/hero1.png", "/hero2.png", "/hero3.png"];
   const [index, setIndex] = useState(0);
 
-  // Rotate background images every 4 seconds
+  // Rotate images every 4s
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % heroImages.length);
@@ -25,39 +21,37 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
   }, []);
 
   return (
-    <div className="relative bg-white min-h-screen">
+    <div className="relative bg-black min-h-screen">
 
-      {/* Background slideshow with fade */}
+      {/* Background slideshow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {heroImages.map((src, i) => (
           <img
             key={i}
             src={src}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] 
-              ${i === index ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 w-full h-full object-cover opacity-20 transition-opacity duration-[1200ms]
+            ${i === index ? "opacity-30" : "opacity-0"}`}
           />
         ))}
       </div>
 
-      {/* White overlay for temporary BG */}
-      <div className="absolute inset-0 bg-white/70 backdrop-blur-sm pointer-events-none"></div>
-
+      {/* CONTENT WRAPPER */}
       <div className="relative z-10">
 
-        {/* -------------------------------------- */}
+        {/* --------------------------- */}
         {/* HERO SECTION */}
-        {/* -------------------------------------- */}
+        {/* --------------------------- */}
         <section className="max-w-7xl mx-auto px-6 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-          {/* LEFT SIDE */}
-          <div className="text-black">
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
-              AOT:R <span className="text-blue-500">Values</span>
+          {/* LEFT SIDE TEXT */}
+          <div>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+              AOT:R <span className="text-blue-400">Values</span>
             </h1>
 
-            <p className="text-gray-700 text-lg md:text-xl max-w-lg mt-6">
+            <p className="text-gray-300 text-lg md:text-xl max-w-lg mt-6">
               The ultimate hub for Attack on Titan Revolution trading.
-              Get live values, trade analysis, and community-posted trade offers.
+              Get live values, trade analysis, and community trade offers.
             </p>
 
             {/* Buttons */}
@@ -71,7 +65,7 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
 
               <Link
                 to="/value-list"
-                className="px-6 py-3 rounded-xl bg-gray-200 text-gray-800 font-medium hover:bg-gray-300 transition border border-gray-400 flex items-center gap-2"
+                className="px-6 py-3 rounded-xl bg-gray-800 text-gray-200 font-medium hover:bg-gray-700 transition border border-gray-700 flex items-center gap-2"
               >
                 Values ★
               </Link>
@@ -80,7 +74,7 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
 
           {/* RIGHT SIDE IMAGE */}
           <div className="relative flex justify-center lg:justify-end">
-            <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-300 bg-white/60 backdrop-blur">
+            <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-800 bg-black/40 backdrop-blur">
               <img
                 src="/hero.png"
                 alt="AOTR Hero"
@@ -90,88 +84,52 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
           </div>
         </section>
 
-        {/* -------------------------------------- */}
-        {/* FEATURES */}
-        {/* -------------------------------------- */}
+        {/* --------------------------- */}
+        {/* FEATURES SECTION */}
+        {/* --------------------------- */}
         <section className="max-w-7xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold text-black mb-6">
-            AOTR Values Features
-          </h2>
-          <p className="text-gray-700 mb-10">
-            Everything you need for successful Attack on Titan Revolution trading.
+          <h2 className="text-3xl font-bold text-white mb-6">AOTR Features</h2>
+          <p className="text-gray-400 mb-10">
+            Everything you need for successful trading.
           </p>
 
           <div className="grid sm:grid-cols-2 gap-6">
             {[
-              {
-                title: "Real-Time Values",
-                desc: "Updated trading values with accurate market trends.",
-                link: "/value-list",
-              },
-              {
-                title: "Trade Ads",
-                desc: "Browse active trade offers from players.",
-                link: "/trade-ads",
-              },
-              {
-                title: "Smart Calculator",
-                desc: "Analyze trades instantly and avoid overpaying.",
-                link: "/calculator",
-              },
-              {
-                title: "Safe Trading",
-                desc: "Stay safe with verified scam logs.",
-                link: "/scam-logs",
-              },
+              { title: "Real-Time Values", desc: "Accurate values with market trends.", link: "/value-list" },
+              { title: "Trade Ads", desc: "Browse community-posted offers.", link: "/trade-ads" },
+              { title: "Trade Calculator", desc: "Analyze trades instantly.", link: "/calculator" },
+              { title: "Scam Logs", desc: "Stay safe and avoid scammers.", link: "/scam-logs" },
             ].map((feature, i) => (
               <Link
                 to={feature.link}
                 key={i}
                 className="
-                  block bg-white shadow-md border border-gray-300 
-                  rounded-2xl p-6 transition
-                  hover:border-blue-500 hover:shadow-blue-300/40 hover:-translate-y-1
+                  block bg-gray-900/40 border border-gray-700 
+                  rounded-2xl p-6 shadow-lg transition
+                  hover:border-blue-500 hover:bg-gray-900/60 hover:-translate-y-1
                 "
               >
-                <h3 className="text-xl font-semibold text-black mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-700 text-sm mb-4">{feature.desc}</p>
-                <span className="text-blue-500 font-medium">Explore →</span>
+                <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                <p className="text-gray-400 text-sm mb-4">{feature.desc}</p>
+                <span className="text-blue-400 font-medium">Explore →</span>
               </Link>
             ))}
           </div>
         </section>
 
-        import { MarketStockWidget } from "./MarketStockWidget";
+        {/* --------------------------- */}
+        {/* ⭐ MARKET STOCK SECTION ⭐ */}
+        {/* --------------------------- */}
+        <section className="max-w-7xl mx-auto px-6 py-12">
+          <MarketStockWidget items={items} />
+        </section>
 
-export const Home: React.FC<HomeProps> = ({ items }) => {
-  return (
-    <div className="relative">
-
-      {/* HERO... */}
-
-      {/* FEATURES... */}
-
-      {/* ⭐ MARKET STOCK WIDGET HERE ⭐ */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 py-12">
-        <MarketStockWidget items={items} />
-      </section>
-
-      {/* FAQ... */}
-
-    </div>
-  );
-};
-
-
-        {/* -------------------------------------- */}
+        {/* --------------------------- */}
         {/* FAQ SECTION */}
-        {/* -------------------------------------- */}
+        {/* --------------------------- */}
         <section className="max-w-7xl mx-auto px-6 py-16">
           <FAQSection />
         </section>
-
       </div>
     </div>
   );
