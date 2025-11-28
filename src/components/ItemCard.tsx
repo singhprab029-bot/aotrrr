@@ -78,18 +78,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
   <div className="w-28 h-28 sm:w-32 sm:h-32 flex justify-center items-center">
     {renderIcon(item.emoji)}
   </div>
-
-  {/* Status badge overlapping */}
-  <span
-    className={`
-      absolute top-0 right-0 
-      px-3 py-1 text-xs rounded-full border font-semibold
-      ${getStatusColor(item.status)}
-      translate-x-2 -translate-y-2
-    `}
-  >
-    {item.status}
-  </span>
 </div>
 
 
