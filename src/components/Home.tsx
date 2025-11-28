@@ -143,6 +143,28 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
           </div>
         </section>
 
+        import { MarketStockWidget } from "./MarketStockWidget";
+
+export const Home: React.FC<HomeProps> = ({ items }) => {
+  return (
+    <div className="relative">
+
+      {/* HERO... */}
+
+      {/* FEATURES... */}
+
+      {/* ⭐ MARKET STOCK WIDGET HERE ⭐ */}
+      <section className="relative z-10 max-w-7xl mx-auto px-6 py-12">
+        <MarketStockWidget items={items} />
+      </section>
+
+      {/* FAQ... */}
+
+    </div>
+  );
+};
+
+
         {/* -------------------------------------- */}
         {/* FAQ SECTION */}
         {/* -------------------------------------- */}
