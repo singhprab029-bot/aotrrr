@@ -66,13 +66,32 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
   return (
     <div className="bg-[#06060A] rounded-2xl border border-gray-800 p-5 shadow-xl hover:border-blue-500 transition-all flex flex-col">
 
-      {/* Name & Status */}
-      <div className="flex justify-between items-center mb-3">
-        <h2 className="text-white font-bold text-lg">{item.name}</h2>
-      </div>
+      {/* Item Name */}
+<h2 className="text-white font-bold text-lg mb-2 text-center">
+  {item.name}
+</h2>
 
-      {/* Icon */}
-      <div className="flex justify-center mb-4">{renderIcon(item.emoji)}</div>
+{/* IMAGE + BADGE */}
+<div className="relative flex justify-center mb-4">
+
+  {/* B I G image */}
+  <div className="w-28 h-28 sm:w-32 sm:h-32 flex justify-center items-center">
+    {renderIcon(item.emoji)}
+  </div>
+
+  {/* Status badge overlapping */}
+  <span
+    className={`
+      absolute top-0 right-0 
+      px-3 py-1 text-xs rounded-full border font-semibold
+      ${getStatusColor(item.status)}
+      translate-x-2 -translate-y-2
+    `}
+  >
+    {item.status}
+  </span>
+</div>
+
 
       {/* Mode Buttons */}
       <div className="flex bg-gray-900 border border-gray-800 rounded-full w-max mx-auto mb-4">
