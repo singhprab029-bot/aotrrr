@@ -75,7 +75,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode }) => {
 <div className="relative flex justify-center mb-4">
 
   {/* B I G image */}
-  <div className="w-35 h-35 sm:w-35 sm:h-35 flex justify-center items-center">
+  <div className="w-45 h-45 sm:w-45 sm:h-45 flex justify-center items-center">
     {renderIcon(item.emoji)}
   </div>
 </div>
