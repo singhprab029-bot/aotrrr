@@ -13,6 +13,10 @@ export const ItemFlipGrid: React.FC<ItemFlipGridProps> = ({ items, mode }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
+  // Find Vizard Mask value
+  const vizardMask = items.find((i) => i.name.toLowerCase() === "vizard mask");
+  const vizardValue = vizardMask ? vizardMask.value : 0;
+
   const categories = useMemo(
     () => Array.from(new Set(items.map((i) => i.category))).sort(),
     [items]
@@ -45,8 +49,13 @@ export const ItemFlipGrid: React.FC<ItemFlipGridProps> = ({ items, mode }) => {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-16">
-        {filteredItems.map((i) => (
-          <ItemCard key={i.id} item={i} mode={mode} />
+        {filteredItems.map((item) => (
+          <ItemCard
+            key={item.id}
+            item={item}
+            mode={mode}
+            vizardValue={vizardValue}   // 🔥 SEND Vizard Mask value here
+          />
         ))}
       </div>
     </div>
