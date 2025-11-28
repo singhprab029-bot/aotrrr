@@ -119,54 +119,55 @@ export const ItemCard: React.FC<ItemCardProps> = ({ item, mode, vizardValue }) =
         </p>
       </div>
 
-      {/* STATS */}
-      <div className="space-y-4">
+      {/* Stats - CLEAN COSMIC STYLE */}
+<div className="bg-black/40 rounded-xl p-4 space-y-3 border border-gray-800">
 
-        {/* DEMAND */}
-        <div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-300">📊 Demand</span>
-            <span className={`font-semibold ${getDemandColor(item.demand)}`}>
-              {item.demand}/10
-            </span>
-          </div>
-          <div className="w-full bg-gray-800 rounded-full h-1.5 mt-1">
-            <div
-              className={`h-1.5 rounded-full ${getDemandBarColor(item.demand)}`}
-              style={{ width: `${(item.demand / 10) * 100}%` }}
-            />
-          </div>
-        </div>
+  {/* VALUE */}
+  <div className="flex justify-between text-sm">
+    <span className="text-gray-300 font-medium">Value</span>
+    <span className="text-white font-bold">
+      {item.value >= 1_000_000_000
+        ? (item.value / 1_000_000_000).toFixed(2) + "B"
+        : item.value >= 1_000_000
+        ? (item.value / 1_000_000).toFixed(0) + "M"
+        : item.value.toLocaleString()}
+    </span>
+  </div>
 
-        {/* TREND */}
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-300">📈 Trend</span>
-          <div className="flex items-center gap-1 font-semibold">
-            {getRateIcon(item.rateOfChange)}
-            <span className={getRateColor(item.rateOfChange)}>
-              {item.rateOfChange}
-            </span>
-          </div>
-        </div>
+  {/* TREND */}
+  <div className="flex justify-between text-sm">
+    <span className="text-gray-300 font-medium">Trend</span>
+    <span className={`font-bold ${getRateColor(item.rateOfChange)}`}>
+      {item.rateOfChange}
+    </span>
+  </div>
 
-        {/* TAX */}
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-300">{tax.label}</span>
-          {tax.value > 0 ? (
-            <span className={`font-semibold ${tax.color}`}>
-              {tax.icon} {tax.value.toLocaleString()}
-            </span>
-          ) : (
-            <span className="text-gray-400">None</span>
-          )}
-        </div>
+  {/* DEMAND */}
+  <div className="flex justify-between text-sm">
+    <span className="text-gray-300 font-medium">Demand</span>
+    <span className={`font-bold ${getDemandColor(item.demand)}`}>
+      {item.demand}/10
+    </span>
+  </div>
 
-        {/* PRESTIGE */}
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-300">🏅 Prestige</span>
-          <span className="text-purple-300 font-semibold">{item.prestige}</span>
-        </div>
-      </div>
+  {/* TAX */}
+  <div className="flex justify-between text-sm">
+    <span className="text-gray-300 font-medium">{tax.label}</span>
+    <span className={`font-bold ${tax.color}`}>
+      {tax.value > 0 ? `${tax.icon} ${tax.value.toLocaleString()}` : "None"}
+    </span>
+  </div>
+
+  {/* PRESTIGE */}
+  <div className="flex justify-between text-sm">
+    <span className="text-gray-300 font-medium">Prestige</span>
+    <span className="text-purple-300 font-bold">
+      {item.prestige}
+    </span>
+  </div>
+
+</div>
+
     </div>
   );
 };
