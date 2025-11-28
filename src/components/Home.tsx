@@ -58,47 +58,61 @@ export const Home: React.FC<HomeProps> = ({ items }) => {
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          {/* CARD TEMPLATE */}
-          {[
-            {
-              title: "Real-Time Values",
-              desc: "Live updated trading values with accurate market trends.",
-              link: "/value-list",
-            },
-            {
-              title: "Trade Ads",
-              desc: "Post and browse trades from an active community.",
-              link: "/trade-ads",
-            },
-            {
-              title: "Smart Calculator",
-              desc: "Analyze trades instantly and avoid losing value.",
-              link: "/calculator",
-            },
-            {
-              title: "Safe Trading",
-              desc: "Avoid scams with verified logs and trusted guidance.",
-              link: "/scam-logs",
-            },
-          ].map((feature, i) => (
-            <div
-              key={i}
-              className="bg-gray-900/40 backdrop-blur-xl border border-gray-800 hover:border-blue-500 transition p-6 rounded-2xl shadow-lg"
-            >
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                {feature.title}
-              </h3>
-              <p classname="text-gray-400 text-sm mb-4">{feature.desc}</p>
+  {[
+    {
+      title: "Real-Time Values",
+      desc: "Live updated trading values with accurate market trends.",
+      link: "/value-list",
+    },
+    {
+      title: "Trade Ads",
+      desc: "Post and browse trades from an active community.",
+      link: "/trade-ads",
+    },
+    {
+      title: "Smart Calculator",
+      desc: "Analyze trades instantly and avoid losing value.",
+      link: "/calculator",
+    },
+    {
+      title: "Safe Trading",
+      desc: "Avoid scams with verified logs and trusted guidance.",
+      link: "/scam-logs",
+    },
+  ].map((feature, i) => (
+    <Link
+      to={feature.link}
+      key={i}
+      className="
+        block
+        bg-gray-900/40
+        backdrop-blur-xl
+        border border-gray-800
+        rounded-2xl
+        p-6
+        shadow-lg
+        transition
+        hover:border-blue-500
+        hover:bg-gray-900/60
+        hover:shadow-blue-500/20
+        hover:-translate-y-1
+      "
+    >
+      <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
+        {feature.title}
+      </h3>
 
-              <Link
-                to={feature.link}
-                className="text-blue-400 hover:text-blue-300 font-medium text-sm"
-              >
-                Explore →
-              </Link>
-            </div>
-          ))}
-        </div>
+      <p className="text-gray-400 text-sm mb-4">
+        {feature.desc}
+      </p>
+
+      <span className="text-blue-400 hover:text-blue-300 font-medium text-sm">
+        Explore →
+      </span>
+    </Link>
+  ))}
+</div>
+
       </section>
 
       {/* ---------------------------- */}
