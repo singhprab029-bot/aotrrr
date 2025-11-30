@@ -7,7 +7,7 @@ interface ProtectedRouteProps {
 }
 
 // ⭐ ADD YOUR DISCORD ID HERE ⭐
-const ALLOWED_DISCORD_IDS = ["YOUR_DISCORD_ID"];
+const ALLOWED_DISCORD_IDS = ["512671808886013962"];
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user, loading } = useAuth();
