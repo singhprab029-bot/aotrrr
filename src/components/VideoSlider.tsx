@@ -3,9 +3,9 @@ import React from "react";
 export const VideoSlider = () => {
   const videos = [
     "AMfUlsWhtNc",
-    "dQw4w9WgXcQ",
-    "y6120QOlsfU",
-    "LDU_Txk06tM",
+    "fS2u_FNFt84",
+    "_HoItTdLc5k",
+    "PXkMKWzhNZk",
   ];
 
   // Duplicate for infinite loop
