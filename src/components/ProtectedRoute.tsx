@@ -1,27 +1,28 @@
-import React from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { LoginForm } from './LoginForm';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
+const ALLOWED_DISCORD_IDS = [
+  "512671808886013962" // ← Replace with your real ID (los1zoro)
+];
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return null;
 
   if (!user) {
-    return <LoginForm />;
+    return <Navigate to="/login" replace />;
+  }
+
+  // Discord user ID from Supabase OAuth
+  const discordId = user?.user_metadata?.provider_id 
+                 || user?.user_metadata?.sub
+                 || null;
+
+  // Deny if not your exact Discord account
+  if (!discordId || !ALLOWED_DISCORD_IDS.includes(discordId)) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
