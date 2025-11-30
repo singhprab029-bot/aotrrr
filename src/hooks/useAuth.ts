@@ -41,13 +41,11 @@ export const useAuth = () => {
   };
 
   return {
-  user,
-  session,
-  loading,
-  signIn,
-  signOut,
-  signInWithDiscord,  // <-- ADD THIS
-};
-
+    user,
+    session,
+    loading,
+    signIn,
+    signOut,
+    signInWithDiscord,
   };
 };
