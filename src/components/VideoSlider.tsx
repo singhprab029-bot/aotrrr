@@ -29,11 +29,9 @@ const toEmbed = (url: string) => {
 
 export const VideoSlider = () => {
   const videos = [
-    // ⭐ Paste ANY YouTube link format — auto converts!
-    "https://www.youtube.com/watch?v=AMfUlsWhtNc",
-    "https://www.youtube.com/watch?v=AMfUlsWhtNc",
-    "https://www.youtube.com/watch?v=AMfUlsWhtNc",
-  ];
+  "https://www.youtube.com/watch?v=AMfUlsWhtNc",
+];
+
 
   return (
     <div className="flex overflow-x-auto gap-4 pb-4 hide-scrollbar">
