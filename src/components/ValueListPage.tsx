@@ -10,46 +10,31 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
   const [viewMode, setViewMode] = useState<"regular" | "permanent">("regular");
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 text-center">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 text-center">
 
-      <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+      {/* Title */}
+      <h1 className="text-3xl sm:text-5xl font-extrabold text-white mb-3 sm:mb-4 leading-tight">
         AOT:R Value List
       </h1>
 
-      {/* ⚠️ Warning Banner */}
-<div className="bg-yellow-500/10 border border-yellow-400/30 text-yellow-300 text-sm md:text-base px-4 py-3 rounded-xl mb-6 flex items-center gap-3">
-  <span className="text-xl">⚠️</span>
-  <span>
-    Values may be slightly outdated. For the most accurate trading help, join the Discord.
-  </span>
-</div>
+      {/* Description */}
+      <p className="text-gray-400 max-w-lg sm:max-w-2xl mx-auto mb-8 sm:mb-12 text-sm sm:text-base px-2">
+        Browse our complete AOT:R value list ({items.length}+ items).  
+        <span className="block sm:inline text-yellow-400 font-semibold mt-1 sm:mt-0">
+          ⚠ Values are temporarily outdated — join Discord for verified prices.
+        </span>
+      </p>
 
-{/* Subtitle */}
-<p className="text-gray-400 max-w-2xl mx-auto mb-6 text-sm md:text-base">
-  Browse our full AOT:R item value list with {items.length}+ items.
-</p>
+      {/* Toggle */}
+      <div className="mb-10 sm:mb-12">
+        <h3 className="text-white font-semibold mb-2 sm:mb-3 text-sm sm:text-base">
+          Default View Mode
+        </h3>
 
-{/* Discord Join Button */}
-<div className="flex justify-center mb-12">
-  <a
-    href="https://discord.gg/tradingcorps"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20 flex items-center gap-2"
-  >
-    <span>Join Discord</span>
-    <img src="/discord-icon.png" className="w-5 h-5 opacity-80" />
-  </a>
-</div>
-
-
-      <div className="mb-12">
-        <h3 className="text-white font-semibold mb-3">Default View Mode</h3>
-
-        <div className="inline-flex bg-gray-900 border border-gray-700 rounded-lg overflow-hidden">
+        <div className="inline-flex bg-gray-900 border border-gray-700 rounded-lg overflow-hidden w-full max-w-xs sm:max-w-none">
           <button
             onClick={() => setViewMode("regular")}
-            className={`px-6 py-2 font-medium ${
+            className={`flex-1 px-4 py-2 sm:px-6 sm:py-2 font-medium text-sm sm:text-base ${
               viewMode === "regular"
                 ? "bg-purple-600 text-white"
                 : "text-gray-300 hover:bg-gray-800"
@@ -60,7 +45,7 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
 
           <button
             onClick={() => setViewMode("permanent")}
-            className={`px-6 py-2 font-medium ${
+            className={`flex-1 px-4 py-2 sm:px-6 sm:py-2 font-medium text-sm sm:text-base ${
               viewMode === "permanent"
                 ? "bg-purple-600 text-white"
                 : "text-gray-300 hover:bg-gray-800"
@@ -70,12 +55,15 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
           </button>
         </div>
 
-        <p className="text-gray-500 text-sm mt-2">
+        <p className="text-gray-500 text-xs sm:text-sm mt-2">
           Sets the default display mode for all items.
         </p>
       </div>
 
-      <ItemFlipGrid items={items} mode={viewMode} />
+      {/* Items Grid */}
+      <div className="mt-2">
+        <ItemFlipGrid items={items} mode={viewMode} />
+      </div>
     </div>
   );
 };
