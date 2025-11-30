@@ -124,6 +124,8 @@ export const TradeAdsPage: React.FC<TradeAdsPageProps> = ({ items }) => {
       "Unknown User";
 
     const discordAvatar = user?.user_metadata?.avatar_url || null;
+    console.log("Discord metadata:", user?.user_metadata);
+
 
 
     const [formData, setFormData] = useState<CreateTradeAdData>({
