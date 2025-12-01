@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { getNextReset } from "../utils/getNextReset";
+import { getNextReset } from "../types/getNextReset";
 
 export const StockRestocker: React.FC = () => {
   const [stock, setStock] = useState<any>(null);
