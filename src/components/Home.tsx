@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Item } from "../types/Item";
 import { FAQSection } from "./FAQSection";
 import { VideoSlider } from "./VideoSlider";
+import { StockRestocker } from "../components/StockRestocker";
+
 
 interface HomeProps {
   items: Item[];
