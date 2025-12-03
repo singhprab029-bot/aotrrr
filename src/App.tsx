@@ -6,6 +6,7 @@ import { MaintenancePopup } from "./components/MaintenancePopup";
 import { Home } from "./components/Home";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useItems } from "./hooks/useItems";
+import { OnlinePresenceProvider } from "./components/OnlinePresenceProvider";
 
 const TradeCalculator = lazy(() =>
   import("./components/TradeCalculator").then(m => ({ default: m.TradeCalculator }))
@@ -24,6 +25,11 @@ const ScamLogsPage = lazy(() =>
 );
 const AdminPage = lazy(() =>
   import("./components/AdminPage").then(m => ({ default: m.AdminPage }))
+);
+
+/* ⭐ ADD THIS NEW ONE ⭐ */
+const AuthCallback = lazy(() =>
+  import("./components/AuthCallback").then(m => ({ default: m.default }))
 );
 
 const LoadingFallback = () => (
@@ -53,44 +59,57 @@ export const AppContent: React.FC = () => {
   const isAdminPage = location.pathname === "/admin";
 
   return (
-    <>
-      {!isAdminPage && <Header />}
-      {maintenanceMode && !isAdminPage && <MaintenancePopup />}
+  <div className="min-h-screen bg-black">   {/* ← FIX: FULL PAGE BLACK BACKGROUND */}
 
-      <main className="bg-black">
-          <div className="container mx-auto px-4 py-4">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<Home items={items} />} />
-              <Route path="/calculator" element={<TradeCalculator items={items} />} />
-              <Route path="/value-list" element={<ValueListPage items={items} />} />
-              <Route path="/value-changes" element={<ValueChangesPage />} />
-              <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
-              <Route path="/scam-logs" element={<ScamLogsPage />} />
+    {!isAdminPage && <Header />}
+    {maintenanceMode && !isAdminPage && <MaintenancePopup />}
 
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <AdminPage
-                      maintenanceMode={maintenanceMode}
-                      onMaintenanceModeChange={toggleMaintenanceMode}
-                    />
-                  </ProtectedRoute>
-                }
-              />
+    <main className="bg-black">   {/* removed bg-black since wrapper handles it */}
+      <div className="container mx-auto px-4 py-4">
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+  <Route path="/" element={<Home items={items} />} />
+  <Route path="/calculator" element={<TradeCalculator items={items} />} />
+  <Route path="/value-list" element={<ValueListPage items={items} />} />
+  <Route path="/value-changes" element={<ValueChangesPage />} />
+  <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
+  <Route path="/scam-logs" element={<ScamLogsPage />} />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </div>
-      </main>
-      {!isAdminPage && <Footer />}
-    </>
-  );
+  {/* ⭐ Discord OAuth callback */}
+  <Route path="/auth/callback" element={<AuthCallback />} />
+
+  <Route
+    path="/admin"
+    element={
+      <ProtectedRoute>
+        <AdminPage
+          maintenanceMode={maintenanceMode}
+          onMaintenanceModeChange={toggleMaintenanceMode}
+        />
+      </ProtectedRoute>
+    }
+  />
+
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
+
+        </Suspense>
+      </div>
+    </main>
+
+    {!isAdminPage && <Footer />}
+  </div>
+);
 };
 
-// THIS MUST EXIST
+// THIS MUST EXIS
+
 export default function App() {
-  return <AppContent />;
+  return (
+    <OnlinePresenceProvider>
+      <AppContent />
+    </OnlinePresenceProvider>
+  );
 }
+
+
