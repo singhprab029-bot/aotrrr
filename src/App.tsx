@@ -59,7 +59,7 @@ export const AppContent: React.FC = () => {
   const isAdminPage = location.pathname === "/admin";
 
   return (
-  <div className="min-h-screen bg-black relative overflow-hidden">
+
   
 
   {/* ⭐ GLOBAL STAR BACKGROUND */}
@@ -75,7 +75,7 @@ export const AppContent: React.FC = () => {
       }}
     ></div>
   ))}
-</div>
+
 
 
 
