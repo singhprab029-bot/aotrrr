@@ -59,7 +59,24 @@ export const AppContent: React.FC = () => {
   const isAdminPage = location.pathname === "/admin";
 
   return (
-  <div className="min-h-screen bg-black">   {/* ← FIX: FULL PAGE BLACK BACKGROUND */}
+  <div className="min-h-screen bg-black relative overflow-hidden">
+
+  {/* ⭐ GLOBAL STAR BACKGROUND */}
+  <div className="stars pointer-events-none select-none">
+    {Array.from({ length: 50 }).map((_, i) => (
+      <div
+        key={i}
+        className="star"
+        style={{
+          "--top": `${Math.random() * 100}vh`,
+          "--tail-length": `${8 + Math.random() * 12}em`,
+          "--duration": `${5 + Math.random() * 6}s`,
+          "--delay": `${Math.random() * 5}s`,
+        } as React.CSSProperties}
+      ></div>
+    ))}
+  </div>
+
 
     {!isAdminPage && <Header />}
     {maintenanceMode && !isAdminPage && <MaintenancePopup />}
