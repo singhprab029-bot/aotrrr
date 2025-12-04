@@ -58,8 +58,7 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
-  return (
-
+  return 
   
 
   {/* ⭐ GLOBAL STAR BACKGROUND */}
@@ -76,6 +75,7 @@ export const AppContent: React.FC = () => {
     ></div>
   ))}
 
+    
 
 
 
