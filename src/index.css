@@ -311,3 +311,25 @@
     opacity: 0.5;
   }
 }
+
+.star {
+  position: absolute;
+  width: 12em;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold-bright), transparent);
+  border-radius: 9999px;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 8px var(--gold-bright));
+  animation: star-fall var(--duration) linear infinite;
+}
+
+@keyframes star-fall {
+  0% {
+    transform: translateX(50vw) translateY(0) rotate(25deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50vw) translateY(20vh) rotate(25deg);
+    opacity: 0;
+  }
+}
