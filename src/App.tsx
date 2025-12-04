@@ -8,6 +8,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useItems } from "./hooks/useItems";
 import { OnlinePresenceProvider } from "./components/OnlinePresenceProvider";
 
+/* Lazy-loaded pages */
 const TradeCalculator = lazy(() =>
   import("./components/TradeCalculator").then(m => ({ default: m.TradeCalculator }))
 );
@@ -26,11 +27,11 @@ const ScamLogsPage = lazy(() =>
 const AdminPage = lazy(() =>
   import("./components/AdminPage").then(m => ({ default: m.AdminPage }))
 );
-
 const AuthCallback = lazy(() =>
   import("./components/AuthCallback").then(m => ({ default: m.default }))
 );
 
+/* Loading Spinner */
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[400px]">
     <div className="text-center">
@@ -40,7 +41,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-/* ⭐ MAIN APP EXPORT (MUST BE FIRST DEFAULT EXPORT) */
+/* ⭐ MAIN DEFAULT EXPORT */
 export default function App() {
   return (
     <OnlinePresenceProvider>
@@ -49,12 +50,13 @@ export default function App() {
   );
 }
 
-/* ⭐ APP CONTENT */
+/* ⭐ APP CONTENT (STARFIELD + ROUTES + HEADER + FOOTER) */
 export const AppContent: React.FC = () => {
   const { items } = useItems();
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const location = useLocation();
 
+  /* Load maintenance toggle */
   useEffect(() => {
     const saved = localStorage.getItem("maintenanceMode");
     if (saved) setMaintenanceMode(JSON.parse(saved));
@@ -67,23 +69,37 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
+  /* ⭐ Generate Starfield Shadows */
+  useEffect(() => {
+    function generateStars(count: number) {
+      let result = "";
+      for (let i = 0; i < count; i++) {
+        result += `${Math.random() * 2000}px ${Math.random() * 2000}px #FFF, `;
+      }
+      return result.slice(0, -2);
+    }
+
+    document.documentElement.style.setProperty(
+      "--shadows-small",
+      generateStars(700)
+    );
+    document.documentElement.style.setProperty(
+      "--shadows-medium",
+      generateStars(200)
+    );
+    document.documentElement.style.setProperty(
+      "--shadows-big",
+      generateStars(100)
+    );
+  }, []);
+
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
 
-      {/* ⭐ GLOBAL STAR BACKGROUND */}
-      <div className="pointer-events-none fixed inset-0 w-screen h-screen z-0 overflow-hidden">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <div
-            key={i}
-            className="star"
-            style={{
-              top: `${Math.random() * 100}vh`,
-              left: `${Math.random() * 100}vw`,
-              "--duration": `${4 + Math.random() * 6}s`,
-            } as React.CSSProperties}
-          />
-        ))}
-      </div>
+      {/* ⭐ PIXEL STARFIELD (3 layers) */}
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
 
       {/* ⭐ CONTENT LAYER */}
       <div className="relative z-10">
@@ -101,8 +117,10 @@ export const AppContent: React.FC = () => {
                 <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
                 <Route path="/scam-logs" element={<ScamLogsPage />} />
 
+                {/* ⭐ OAuth */}
                 <Route path="/auth/callback" element={<AuthCallback />} />
 
+                {/* ⭐ Admin panel */}
                 <Route
                   path="/admin"
                   element={
@@ -115,6 +133,7 @@ export const AppContent: React.FC = () => {
                   }
                 />
 
+                {/* ⭐ Redirect */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
