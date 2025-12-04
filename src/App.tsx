@@ -7,7 +7,6 @@ import { Home } from "./components/Home";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useItems } from "./hooks/useItems";
 import { OnlinePresenceProvider } from "./components/OnlinePresenceProvider";
-import { ParticlesBackground } from "./components/ParticlesBackground";
 
 /* Lazy-loaded pages */
 const TradeCalculator = lazy(() =>
@@ -32,7 +31,7 @@ const AuthCallback = lazy(() =>
   import("./components/AuthCallback").then(m => ({ default: m.default }))
 );
 
-/* Loading Spinner */
+/* Loading spinner */
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-[400px]">
     <div className="text-center">
@@ -50,27 +49,14 @@ export default function App() {
     </OnlinePresenceProvider>
   );
 }
-export const AppContent = () => {
-  return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
 
-      {/* ⭐ add this */}
-      <ParticlesBackground />
-
-      <div className="relative z-10">
-        {/* your site content */}
-      </div>
-
-    </div>
-  );
-};
-/* ⭐ APP CONTENT (STARFIELD + ROUTES + HEADER + FOOTER) */
+/* ⭐ APP CONTENT */
 export const AppContent: React.FC = () => {
   const { items } = useItems();
   const [maintenanceMode, setMaintenanceMode] = useState(false);
   const location = useLocation();
 
-  /* Load maintenance toggle */
+  /* Load maintenance mode from localStorage */
   useEffect(() => {
     const saved = localStorage.getItem("maintenanceMode");
     if (saved) setMaintenanceMode(JSON.parse(saved));
@@ -83,7 +69,7 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
-  /* ⭐ Generate Starfield Shadows */
+  /* ⭐ Generate starfield shadows (tiny pixel stars) */
   useEffect(() => {
     function generateStars(count: number) {
       let result = "";
@@ -110,13 +96,14 @@ export const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen relative overflow-hidden bg-[radial-gradient(ellipse_at_bottom,#1B2735_0%,#090A0F_100%)]">
 
-      {/* ⭐ PIXEL STARFIELD (3 layers) */}
+      {/* ⭐ PIXEL STARFIELD LAYERS (GOES HERE AT THE VERY TOP) */}
       <div id="stars"></div>
       <div id="stars2"></div>
       <div id="stars3"></div>
 
-      {/* ⭐ CONTENT LAYER */}
+      {/* ⭐ CONTENT ABOVE STARFIELD */}
       <div className="relative z-10">
+
         {!isAdminPage && <Header />}
         {maintenanceMode && !isAdminPage && <MaintenancePopup />}
 
@@ -131,10 +118,9 @@ export const AppContent: React.FC = () => {
                 <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
                 <Route path="/scam-logs" element={<ScamLogsPage />} />
 
-                {/* ⭐ OAuth */}
+                {/* OAuth callback */}
                 <Route path="/auth/callback" element={<AuthCallback />} />
 
-                {/* ⭐ Admin panel */}
                 <Route
                   path="/admin"
                   element={
@@ -147,7 +133,6 @@ export const AppContent: React.FC = () => {
                   }
                 />
 
-                {/* ⭐ Redirect */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
