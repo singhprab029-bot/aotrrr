@@ -7,6 +7,7 @@ import { Home } from "./components/Home";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useItems } from "./hooks/useItems";
 import { OnlinePresenceProvider } from "./components/OnlinePresenceProvider";
+import { ParticlesBackground } from "./components/ParticlesBackground";
 
 /* Lazy-loaded pages */
 const TradeCalculator = lazy(() =>
@@ -49,7 +50,20 @@ export default function App() {
     </OnlinePresenceProvider>
   );
 }
+export const AppContent = () => {
+  return (
+    <div className="min-h-screen bg-black relative overflow-hidden">
 
+      {/* ⭐ add this */}
+      <ParticlesBackground />
+
+      <div className="relative z-10">
+        {/* your site content */}
+      </div>
+
+    </div>
+  );
+};
 /* ⭐ APP CONTENT (STARFIELD + ROUTES + HEADER + FOOTER) */
 export const AppContent: React.FC = () => {
   const { items } = useItems();
