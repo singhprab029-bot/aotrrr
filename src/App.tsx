@@ -27,7 +27,6 @@ const AdminPage = lazy(() =>
   import("./components/AdminPage").then(m => ({ default: m.AdminPage }))
 );
 
-/* ⭐ ADD THIS NEW ONE ⭐ */
 const AuthCallback = lazy(() =>
   import("./components/AuthCallback").then(m => ({ default: m.default }))
 );
@@ -41,8 +40,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-// THIS MUST EXIS
-
+/* ⭐ MAIN APP EXPORT (MUST BE FIRST DEFAULT EXPORT) */
 export default function App() {
   return (
     <OnlinePresenceProvider>
@@ -51,6 +49,7 @@ export default function App() {
   );
 }
 
+/* ⭐ APP CONTENT */
 export const AppContent: React.FC = () => {
   const { items } = useItems();
   const [maintenanceMode, setMaintenanceMode] = useState(false);
@@ -69,64 +68,61 @@ export const AppContent: React.FC = () => {
   const isAdminPage = location.pathname === "/admin";
 
   return (
-  <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen bg-black relative overflow-hidden">
 
-    {/* ⭐ GLOBAL STAR BACKGROUND */}
-    <div className="pointer-events-none fixed inset-0 w-screen h-screen z-0 overflow-hidden">
-      {Array.from({ length: 40 }).map((_, i) => (
-        <div
-          key={i}
-          className="star"
-          style={{
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
-            "--duration": `${4 + Math.random() * 6}s`,
-          } as React.CSSProperties}
-        />
-      ))}
+      {/* ⭐ GLOBAL STAR BACKGROUND */}
+      <div className="pointer-events-none fixed inset-0 w-screen h-screen z-0 overflow-hidden">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div
+            key={i}
+            className="star"
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              "--duration": `${4 + Math.random() * 6}s`,
+            } as React.CSSProperties}
+          />
+        ))}
+      </div>
+
+      {/* ⭐ CONTENT LAYER */}
+      <div className="relative z-10">
+        {!isAdminPage && <Header />}
+        {maintenanceMode && !isAdminPage && <MaintenancePopup />}
+
+        <main>
+          <div className="container mx-auto px-4 py-4">
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                <Route path="/" element={<Home items={items} />} />
+                <Route path="/calculator" element={<TradeCalculator items={items} />} />
+                <Route path="/value-list" element={<ValueListPage items={items} />} />
+                <Route path="/value-changes" element={<ValueChangesPage />} />
+                <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
+                <Route path="/scam-logs" element={<ScamLogsPage />} />
+
+                <Route path="/auth/callback" element={<AuthCallback />} />
+
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminPage
+                        maintenanceMode={maintenanceMode}
+                        onMaintenanceModeChange={toggleMaintenanceMode}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </div>
+        </main>
+
+        {!isAdminPage && <Footer />}
+      </div>
     </div>
-
-    {/* ⭐ CONTENT LAYER */}
-    <div className="relative z-10">
-      {!isAdminPage && <Header />}
-      {maintenanceMode && !isAdminPage && <MaintenancePopup />}
-
-      <main>
-        <div className="container mx-auto px-4 py-4">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<Home items={items} />} />
-              <Route path="/calculator" element={<TradeCalculator items={items} />} />
-              <Route path="/value-list" element={<ValueListPage items={items} />} />
-              <Route path="/value-changes" element={<ValueChangesPage />} />
-              <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
-              <Route path="/scam-logs" element={<ScamLogsPage />} />
-
-              {/* ⭐ Discord OAuth callback */}
-              <Route path="/auth/callback" element={<AuthCallback />} />
-
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <AdminPage
-                      maintenanceMode={maintenanceMode}
-                      onMaintenanceModeChange={toggleMaintenanceMode}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </div>
-      </main>
-
-      {!isAdminPage && <Footer />}
-    </div>
-  </div>
-);
-
-
-
+  );
+};
