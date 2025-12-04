@@ -60,6 +60,7 @@ export const AppContent: React.FC = () => {
 
   return (
   <div className="min-h-screen bg-black relative overflow-hidden">
+     <div className="stars"></div>
 
   {/* ⭐ GLOBAL STAR BACKGROUND */}
   <div className="stars pointer-events-none select-none">
