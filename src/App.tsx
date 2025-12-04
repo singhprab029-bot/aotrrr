@@ -94,7 +94,7 @@ export const AppContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden bg-[radial-gradient(ellipse_at_bottom,#1B2735_0%,#090A0F_100%)]">
 
       {/* ⭐ PIXEL STARFIELD (3 layers) */}
       <div id="stars"></div>
