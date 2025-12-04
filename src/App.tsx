@@ -41,6 +41,16 @@ const LoadingFallback = () => (
   </div>
 );
 
+// THIS MUST EXIS
+
+export default function App() {
+  return (
+    <OnlinePresenceProvider>
+      <AppContent />
+    </OnlinePresenceProvider>
+  );
+}
+
 export const AppContent: React.FC = () => {
   const { items } = useItems();
   const [maintenanceMode, setMaintenanceMode] = useState(false);
@@ -118,15 +128,5 @@ export const AppContent: React.FC = () => {
   </div>
 );
 
-
-// THIS MUST EXIS
-
-export default function App() {
-  return (
-    <OnlinePresenceProvider>
-      <AppContent />
-    </OnlinePresenceProvider>
-  );
-}
 
 
