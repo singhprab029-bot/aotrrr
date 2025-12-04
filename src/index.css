@@ -230,3 +230,87 @@
   animation: slide-up-fade 0.45s ease-out forwards;
   opacity: 0;
 }
+
+/* ========================= */
+/*  GOLDEN STAR BACKGROUND   */
+/* ========================= */
+
+:root {
+  --star-color: #f0d58a; /* matches --gold-bright */
+}
+
+/* Container for all stars */
+.stars {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 120%;
+  overflow: hidden;
+  transform: rotate(-45deg);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Individual star */
+.star {
+  position: absolute;
+  height: 2px;
+  width: var(--tail-length, 12em);
+  top: var(--top, 10vh);
+  left: 100vw;
+
+  background: linear-gradient(45deg, var(--star-color), transparent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px var(--star-color));
+
+  animation:
+    fall var(--duration, 8s) var(--delay, 0s) linear infinite,
+    tailfade var(--duration, 8s) var(--delay, 0s) ease-out infinite;
+}
+
+/* Spark flares */
+.star::before,
+.star::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 100%;
+  left: -2px;
+  background: linear-gradient(45deg, transparent, var(--star-color), transparent);
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+
+.star::before {
+  transform: rotate(45deg);
+}
+.star::after {
+  transform: rotate(-45deg);
+}
+
+/* Falling motion */
+@keyframes fall {
+  to {
+    transform: translateX(-120vw);
+  }
+}
+
+/* Fade the tail */
+@keyframes tailfade {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Sparkle blinking */
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
