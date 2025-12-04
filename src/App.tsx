@@ -58,67 +58,66 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
-  return 
-  
+  return (
+  <div className="min-h-screen bg-black relative overflow-hidden">
 
-  {/* ⭐ GLOBAL STAR BACKGROUND */}
-<div className="pointer-events-none fixed inset-0 w-screen h-screen z-0 overflow-hidden">
-  {Array.from({ length: 40 }).map((_, i) => (
-    <div
-      key={i}
-      className="star"
-      style={{
-        top: `${Math.random() * 100}vh`,
-        left: `${Math.random() * 100}vw`,
-        "--duration": `${4 + Math.random() * 6}s`,
-      }}
-    ></div>
-  ))}
-
-    
-
-
-
-    {!isAdminPage && <Header />}
-    {maintenanceMode && !isAdminPage && <MaintenancePopup />}
-
-    <main className="bg-black">   {/* removed bg-black since wrapper handles it */}
-      <div className="container mx-auto px-4 py-4">
-        <Suspense fallback={<LoadingFallback />}>
-          <Routes>
-  <Route path="/" element={<Home items={items} />} />
-  <Route path="/calculator" element={<TradeCalculator items={items} />} />
-  <Route path="/value-list" element={<ValueListPage items={items} />} />
-  <Route path="/value-changes" element={<ValueChangesPage />} />
-  <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
-  <Route path="/scam-logs" element={<ScamLogsPage />} />
-
-  {/* ⭐ Discord OAuth callback */}
-  <Route path="/auth/callback" element={<AuthCallback />} />
-
-  <Route
-    path="/admin"
-    element={
-      <ProtectedRoute>
-        <AdminPage
-          maintenanceMode={maintenanceMode}
-          onMaintenanceModeChange={toggleMaintenanceMode}
+    {/* ⭐ GLOBAL STAR BACKGROUND */}
+    <div className="pointer-events-none fixed inset-0 w-screen h-screen z-0 overflow-hidden">
+      {Array.from({ length: 40 }).map((_, i) => (
+        <div
+          key={i}
+          className="star"
+          style={{
+            top: `${Math.random() * 100}vh`,
+            left: `${Math.random() * 100}vw`,
+            "--duration": `${4 + Math.random() * 6}s`,
+          } as React.CSSProperties}
         />
-      </ProtectedRoute>
-    }
-  />
+      ))}
+    </div>
 
-  <Route path="*" element={<Navigate to="/" replace />} />
-</Routes>
+    {/* ⭐ CONTENT LAYER */}
+    <div className="relative z-10">
+      {!isAdminPage && <Header />}
+      {maintenanceMode && !isAdminPage && <MaintenancePopup />}
 
-        </Suspense>
-      </div>
-    </main>
+      <main>
+        <div className="container mx-auto px-4 py-4">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Home items={items} />} />
+              <Route path="/calculator" element={<TradeCalculator items={items} />} />
+              <Route path="/value-list" element={<ValueListPage items={items} />} />
+              <Route path="/value-changes" element={<ValueChangesPage />} />
+              <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
+              <Route path="/scam-logs" element={<ScamLogsPage />} />
 
-    {!isAdminPage && <Footer />}
+              {/* ⭐ Discord OAuth callback */}
+              <Route path="/auth/callback" element={<AuthCallback />} />
+
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminPage
+                      maintenanceMode={maintenanceMode}
+                      onMaintenanceModeChange={toggleMaintenanceMode}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </main>
+
+      {!isAdminPage && <Footer />}
+    </div>
   </div>
 );
-};
+
 
 // THIS MUST EXIS
 
