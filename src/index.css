@@ -11,6 +11,7 @@
   --gold-bright: #f0d58a;
   --gold-border: #b0884d;
   --gold-dark: #8c6b3d;
+  --star-color: #f0d58a;
 }
 
 /* Text Utilities */
@@ -234,10 +235,6 @@
 /* ========================= */
 /*  GOLDEN STAR BACKGROUND   */
 /* ========================= */
-
-:root {
-  --star-color: #f0d58a; /* matches --gold-bright */
-}
 
 /* Container for all stars */
 .stars {
