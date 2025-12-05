@@ -1,154 +1,140 @@
-import React from 'react';
-import { ExternalLink, Mail, Home, List, Calculator, History, Shield } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-export const Footer: React.FC = () => {
+export const Header: React.FC = () => {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Value List", path: "/value-list" },
+    { name: "Trade Calculator", path: "/calculator" },
+    { name: "Value Changes", path: "/value-changes" },
+    { name: "Trade Ads", path: "/trade-ads" },
+    { name: "Scam Logs", path: "/scam-logs" },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <footer
+    <header
       className="
-      relative 
-      bg-gradient-to-b from-[#0A0A0A] to-black
-      border-t border-[var(--gold-soft)]/20
-      rounded-t-3xl
-      shadow-[0_-10px_25px_rgba(255,215,100,0.05)]
-      mt-16
-    "
+        sticky top-0 z-50 py-5 backdrop-blur-xl
+        bg-black                /* mobile */
+        md:bg-transparent       /* desktop transparent */
+      "
     >
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
-      {/* Ambient gold glow line */}
-      <div className="absolute -top-[1px] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--gold-bright)] to-transparent opacity-40"></div>
+        {/* ⭐ LEFT LOGO WITH GLOW */}
+        <Link to="/" className="relative flex items-center">
+          <div className="
+              absolute inset-0 
+              rounded-full 
+              blur-xl 
+              opacity-40 
+              bg-[var(--gold-bright)]
+            "
+          ></div>
 
-      <div className="max-w-7xl mx-auto px-6 py-14">
+          <img
+            src="/customdiscordlogo.png"
+            className="relative h-14 w-auto object-contain"
+            alt="AOTR Logo"
+          />
+        </Link>
 
-        {/* GRID */}
-        <div
+        {/* ⭐ DESKTOP NAV */}
+        <div className="hidden md:flex items-center justify-center flex-1">
+          <div className="flex items-center 
+                          bg-[#111]/70           /* slightly transparent */
+                          backdrop-blur-xl
+                          rounded-full px-14 py-5 gap-6 
+                          border border-gray-700 
+                          shadow-[0_0_15px_rgba(255,220,150,0.1)]
+                          ">
+            {links.map((l) => (
+              <Link
+                key={l.path}
+                to={l.path}
+                className={`px-6 py-3 rounded-full text-[15px] font-medium transition-all duration-200 ${
+                  isActive(l.path)
+                    ? "bg-[rgba(255,220,150,0.18)] text-[var(--gold-bright)] shadow-[0_0_12px_rgba(255,225,150,0.3)]"
+                    : "text-[var(--gold-soft)] hover:bg-[rgba(255,220,150,0.08)] hover:text-[var(--gold-bright)]"
+                }`}
+              >
+                {l.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* ⭐ DISCORD BUTTON (BIGGER + GLOW) */}
+        <a
+          href="https://discord.gg/tradingcorps"
+          target="_blank"
+          rel="noopener noreferrer"
           className="
-            grid
-            grid-cols-2
-            sm:grid-cols-3
-            lg:grid-cols-4
-            gap-10
+            hidden md:flex items-center justify-center h-16 w-16 
+            rounded-full border-[2px] 
+            border-[var(--gold-bright)] 
+            text-[var(--gold-bright)]
+            hover:bg-[rgba(255,220,150,0.20)]
+            transition shadow-[0_0_18px_rgba(255,220,150,0.45)]
           "
         >
+          <img
+            src="/discord-icon.png"
+            alt="Discord"
+            className="h-9 w-9 object-contain"
+          />
+        </a>
 
-          {/* Brand */}
-          <div className="col-span-2 sm:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-3xl text-[var(--gold-bright)] drop-shadow-[0_0_6px_rgba(255,215,100,0.6)]">⚔️</span>
-              <h2 className="text-xl font-bold text-[var(--gold-bright)]">AOT:R Value Hub</h2>
-            </div>
-
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              aotrvalue.com is a 3rd party site not affiliated with Attack on Titan Revolution or Roblox.
-            </p>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
-              Navigation
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <Home className="w-4 h-4" /> Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/value-list" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <List className="w-4 h-4" /> Value List
-                </Link>
-              </li>
-              <li>
-                <Link to="/calculator" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <Calculator className="w-4 h-4" /> Calculator
-                </Link>
-              </li>
-              <li>
-                <Link to="/value-changes" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <History className="w-4 h-4" /> Value Changes
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Community */}
-          <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
-              Community
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/trade-ads" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <Shield className="w-4 h-4" /> Trade Ads
-                </Link>
-              </li>
-              <li>
-                <Link to="/scam-logs" className="flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all">
-                  <Shield className="w-4 h-4" /> Scam Logs
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://discord.gg/tradingcorps"
-                  target="_blank"
-                  className="inline-flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all"
-                >
-                  Discord <ExternalLink className="w-3 h-3" />
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
-              Support
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="https://discord.gg/tradingcorps"
-                  target="_blank"
-                  className="inline-flex items-center gap-2 text-[var(--gold-soft)] hover:text-[var(--gold-bright)] transition-all"
-                >
-                  <Mail className="w-4 h-4" /> Contact Us
-                </a>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        {/* Divider */}
-        <div className="border-t border-gray-800 mt-12 pt-5 flex flex-col sm:flex-row items-center justify-between text-center gap-3">
-          <p className="text-gray-500 text-xs sm:text-sm">
-            © 2025 AOT:R Value Hub — Not affiliated with AoT:R or Roblox.
-          </p>
-
-          <p className="flex items-center gap-1 text-gray-500 text-xs sm:text-sm">
-            Made with ❤️ by the Community
-          </p>
-        </div>
-
+        {/* ⭐ MOBILE MENU ICON */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-[var(--gold-bright)] p-2"
+        >
+          {open ? <X size={32} /> : <Menu size={32} />}
+        </button>
       </div>
 
-      {/* Back to top button */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="
-          fixed bottom-6 right-6
-          bg-[var(--gold-bright)]
-          text-black
-          p-3 rounded-full
-          shadow-[0_0_12px_rgba(255,215,100,0.6)]
-          hover:scale-105 active:scale-95
-          transition-all
-        "
-      >
-        ↑
-      </button>
+      {/* ⭐ MOBILE MENU DROPDOWN */}
+      {open && (
+        <div className="md:hidden mt-4 bg-black border-t border-gray-800 overflow-hidden">
+          {links.map((l, i) => (
+            <Link
+              key={l.path}
+              to={l.path}
+              onClick={() => setOpen(false)}
+              className="block px-6 py-4 text-lg mobile-item"
+              style={{
+                animationDelay: `${i * 0.12}s`,
+                color: isActive(l.path)
+                  ? "var(--gold-bright)"
+                  : "var(--gold-soft)",
+              }}
+            >
+              {l.name}
+            </Link>
+          ))}
 
-    </footer>
+          {/* Mobile Discord */}
+          <a
+            href="https://discord.gg/tradingcorps"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-6 py-4 text-lg mobile-item"
+            style={{
+              animationDelay: `${links.length * 0.12}s`,
+              color: "var(--gold-soft)",
+            }}
+          >
+            Discord
+          </a>
+        </div>
+      )}
+    </header>
   );
 };
