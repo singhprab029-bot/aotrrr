@@ -255,21 +255,19 @@
 }
 
 #stars2 {
-  content: "";
-  position: absolute;
-  top: 2000px;
-  left: 0;
   width: 100vw;
   height: calc(var(--vh) * 100);
-  box-shadow: inherit;
+  box-shadow: var(--shadows-medium);
+  animation: animStar 100s linear infinite;
 }
 
 #stars3 {
-  width: 3px;
+  width: 100vw;
   height: calc(var(--vh) * 100);
   box-shadow: var(--shadows-big);
   animation: animStar 150s linear infinite;
 }
+
 
 /* Repeated stars */
 #stars:after, #stars2:after, #stars3:after {
