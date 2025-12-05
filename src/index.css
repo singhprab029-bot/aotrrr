@@ -245,6 +245,7 @@
   z-index: 0;
 }
 
+
 #stars {
   box-shadow: var(--shadows-small);
   animation: animStar 50s linear infinite;
