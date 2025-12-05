@@ -69,26 +69,50 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
-  /* ⭐ Generate starfield shadows (tiny pixel stars) */
-  /* ⭐ Generate starfield shadows that scale with screen */
 useEffect(() => {
-  function generateStars(count: number) {
-    let result = "";
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+  const setVh = () => {
+    document.documentElement.style.setProperty(
+      "--vh",
+      `${window.innerHeight * 0.01}px`
+    );
+  };
 
-    for (let i = 0; i < count; i++) {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      result += `${x}px ${y}px #FFF, `;
+  const regenerateStars = () => {
+    const width = window.innerWidth * 1.5;
+    const height = window.innerHeight * 1.5;
+
+    function generate(count: number) {
+      let result = "";
+      for (let i = 0; i < count; i++) {
+        result += `${Math.random() * width}px ${Math.random() * height}px #FFF, `;
+      }
+      return result.slice(0, -2);
     }
-    return result.slice(0, -2);
-  }
 
-  document.documentElement.style.setProperty("--shadows-small", generateStars(700));
-  document.documentElement.style.setProperty("--shadows-medium", generateStars(200));
-  document.documentElement.style.setProperty("--shadows-big", generateStars(100));
+    document.documentElement.style.setProperty("--shadows-small", generate(700));
+    document.documentElement.style.setProperty("--shadows-medium", generate(250));
+    document.documentElement.style.setProperty("--shadows-big", generate(120));
+  };
+
+  setVh();
+  regenerateStars();
+
+  window.addEventListener("resize", () => {
+    setVh();
+    regenerateStars();
+  });
+
+  window.addEventListener("orientationchange", () => {
+    setVh();
+    regenerateStars();
+  });
+
+  return () => {
+    window.removeEventListener("resize", setVh);
+    window.removeEventListener("orientationchange", setVh);
+  };
 }, []);
+
 
 
   return (
