@@ -18,148 +18,125 @@ export const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header
-      className="
-        sticky top-0 z-50 py-5 backdrop-blur-xl
-        bg-black md:bg-transparent
-      "
-    >
+    <header className="sticky top-0 z-50 py-5 backdrop-blur-xl bg-black md:bg-transparent">
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-
-        {/* ⭐ LEFT LOGO WITH STRONGER GLOW */}
-        <Link to="/" className="relative flex items-center">
-          <div className="
-            absolute inset-0 w-16 h-16 
-            rounded-full blur-2xl
-            bg-[var(--gold-bright)] opacity-30
-          "></div>
-
+        {/* Logo (kept simple) */}
+        <Link to="/" className="flex items-center">
           <img
             src="/customdiscordlogo.png"
-            className="relative h-14 w-auto object-contain"
+            className="h-14 w-auto object-contain"
             alt="AOTR Logo"
           />
         </Link>
 
-        {/* ⭐ DESKTOP NAV — MORE PREMIUM */}
+        {/* DESKTOP NAV */}
         <div className="hidden md:flex items-center justify-center flex-1">
           <nav
             className="
-              flex items-center
-              bg-[#0C0C0C]/70
-              backdrop-blur-2xl
-              rounded-full px-14 py-5 gap-6
-              border border-[var(--gold-soft)]/20
-              shadow-[0_0_30px_rgba(255,215,100,0.06)]
+              flex items-center gap-6
+              bg-[#0C0C0C]/80
+              backdrop-blur-xl
+              rounded-full px-14 py-4
+              border border-[var(--gold-soft)]/25
             "
           >
-            {links.map((l) => (
-              <Link
-                key={l.path}
-                to={l.path}
-                className={`
-                  relative px-6 py-3 rounded-full text-[15px] font-medium
-                  transition-all duration-200
-                  group
-                  ${
-                    isActive(l.path)
-                      ? "text-[var(--gold-bright)] bg-[rgba(255,220,150,0.15)] shadow-[0_0_20px_rgba(255,225,150,0.25)]"
-                      : "text-[var(--gold-soft)] hover:text-[var(--gold-bright)] hover:bg-[rgba(255,220,150,0.08)]"
-                  }
-                `}
-              >
-                {l.name}
-
-                {/* Underline animation */}
-                <span
+            {links.map((l) => {
+              const active = isActive(l.path);
+              return (
+                <Link
+                  key={l.path}
+                  to={l.path}
                   className={`
-                    absolute left-1/2 -bottom-1 h-[2px] w-0 
-                    bg-[var(--gold-bright)]
-                    transition-all duration-300 rounded-full 
-                    group-hover:w-3/5 group-hover:left-1/5
-                    ${isActive(l.path) ? "w-3/5 left-1/5" : ""}
+                    relative px-6 py-2 rounded-full text-[15px] font-medium
+                    transition-all duration-200 group
+                    ${
+                      active
+                        ? "text-[var(--gold-bright)] bg-[rgba(255,220,150,0.10)]"
+                        : "text-[var(--gold-soft)] hover:text-[var(--gold-bright)] hover:bg-[rgba(255,220,150,0.06)]"
+                    }
                   `}
-                ></span>
-              </Link>
-            ))}
-          </nav>
+                >
+                  {l.name}
 
+                  {/* Centered underline */}
+                  <span
+                    className={`
+                      block h-[2px] rounded-full bg-[var(--gold-bright)]
+                      mt-1 mx-auto
+                      transition-all duration-300
+                      ${
+                        active
+                          ? "w-10 opacity-100"
+                          : "w-0 opacity-0 group-hover:w-10 group-hover:opacity-80"
+                      }
+                    `}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* ⭐ DISCORD BUTTON WITH MORE DEPTH */}
+        {/* DISCORD BUTTON */}
         <a
           href="https://discord.gg/tradingcorps"
           target="_blank"
           rel="noopener noreferrer"
           className="
-            hidden md:flex items-center justify-center h-16 w-16 
-            rounded-full border-[2px]
+            hidden md:flex items-center justify-center h-14 w-14 
+            rounded-full border
             border-[var(--gold-bright)]
             text-[var(--gold-bright)]
-            hover:bg-[rgba(255,220,150,0.18)]
+            hover:bg-[rgba(255,220,150,0.12)]
             transition
-            shadow-[0_0_25px_rgba(255,220,150,0.35)]
           "
         >
           <img
             src="/discord-icon.png"
             alt="Discord"
-            className="h-9 w-9 object-contain"
+            className="h-8 w-8 object-contain"
           />
         </a>
 
-        {/* ⭐ MOBILE MENU ICON — IMPROVED INTERACTION */}
+        {/* MOBILE MENU BUTTON */}
         <button
           onClick={() => setOpen(!open)}
-          className="
-            md:hidden text-[var(--gold-bright)]
-            p-2 active:scale-95 transition-transform
-          "
+          className="md:hidden text-[var(--gold-bright)] p-2 active:scale-95 transition-transform"
         >
           {open ? <X size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
-      {/* ⭐ MOBILE DROPDOWN (ANIMATED + PREMIUM) */}
+      {/* MOBILE MENU */}
       {open && (
-        <div
-          className="
-            md:hidden mt-4 bg-black/95 backdrop-blur-xl
-            border-t border-gray-800
-            flex flex-col shadow-lg
-            animate-slideDown
-          "
-        >
-          {links.map((l, i) => (
-            <Link
-              key={l.path}
-              to={l.path}
-              onClick={() => setOpen(false)}
-              className={`
-                block px-6 py-4 text-lg 
-                border-b border-gray-900/60 
-                transition-all
-                ${
-                  isActive(l.path)
-                    ? "text-[var(--gold-bright)] bg-[rgba(255,220,150,0.1)]"
-                    : "text-[var(--gold-soft)] hover:text-[var(--gold-bright)]"
-                }
-              `}
-              style={{ animationDelay: `${i * 0.10}s` }}
-            >
-              {l.name}
-            </Link>
-          ))}
+        <div className="md:hidden mt-4 bg-black/95 backdrop-blur-xl border-t border-gray-800 shadow-lg">
+          {links.map((l) => {
+            const active = isActive(l.path);
+            return (
+              <Link
+                key={l.path}
+                to={l.path}
+                onClick={() => setOpen(false)}
+                className={`
+                  block px-6 py-4 text-lg border-b border-gray-900/60
+                  transition-all
+                  ${
+                    active
+                      ? "text-[var(--gold-bright)] bg-[rgba(255,220,150,0.10)]"
+                      : "text-[var(--gold-soft)] hover:text-[var(--gold-bright)]"
+                  }
+                `}
+              >
+                {l.name}
+              </Link>
+            );
+          })}
 
-          {/* Mobile Discord */}
           <a
             href="https://discord.gg/tradingcorps"
             target="_blank"
             rel="noopener noreferrer"
-            className="
-              block px-6 py-4 text-lg 
-              text-[var(--gold-soft)] hover:text-[var(--gold-bright)]
-            "
+            className="block px-6 py-4 text-lg text-[var(--gold-soft)] hover:text-[var(--gold-bright)]"
           >
             Discord
           </a>
