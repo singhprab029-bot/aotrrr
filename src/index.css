@@ -240,20 +240,20 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: calc(var(--vh) * 100);   /* ✅ ADD THIS HERE */
+  height: calc(var(--vh) * 100);
   background: transparent;
   pointer-events: none;
   z-index: 0;
   overflow: visible;
 }
 
-
-
+/* small stars */
 #stars {
   box-shadow: var(--shadows-small);
   animation: animStar 50s linear infinite;
 }
 
+/* medium stars */
 #stars2 {
   width: 100vw;
   height: calc(var(--vh) * 100);
@@ -261,6 +261,7 @@
   animation: animStar 100s linear infinite;
 }
 
+/* big stars */
 #stars3 {
   width: 100vw;
   height: calc(var(--vh) * 100);
@@ -268,16 +269,19 @@
   animation: animStar 150s linear infinite;
 }
 
-
-/* Repeated stars */
-#stars:after, #stars2:after, #stars3:after {
+/* repeated stars for scroll */
+#stars:after,
+#stars2:after,
+#stars3:after {
   content: "";
   position: absolute;
   top: 2000px;
-  width: inherit;
-  height: inherit;
+  left: 0;
+  width: 100vw;
+  height: calc(var(--vh) * 100);
   box-shadow: inherit;
 }
+
 
 /* Animation */
 @keyframes animStar {
