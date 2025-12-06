@@ -233,21 +233,24 @@
   opacity: 0;
 }
 
+/* MAIN DARK BACKGROUND */
 .aotr-background {
   position: relative;
+  background: radial-gradient(circle at 50% 20%, #111 0%, #050505 70%, #000 100%);
   overflow: hidden;
-  background: #070708; /* base dark bg */
 }
 
-/* GLOBAL GRID */
+/* WHITE GRID LINES */
 .aotr-background::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image: url("/gridd.svg");
-  background-size: 500px 500px; /* adjust grid density */
-  opacity: 0.10; /* grid visibility */
+  background-size: 500px 500px; /* adjust density */
+  opacity: 0.15;
   pointer-events: none;
   mix-blend-mode: soft-light;
+  z-index: 0;
 }
+
 
