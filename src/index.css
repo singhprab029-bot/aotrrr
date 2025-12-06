@@ -233,69 +233,22 @@
   opacity: 0;
 }
 
-/* === Stars Background (3 layers parallax) === */
-
-#stars, #stars2, #stars3 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: calc(var(--vh) * 100);
-  background: transparent;
-  pointer-events: none;
-  z-index: 0;
-  overflow: visible;
+/* Premium AOTR Gradient Background */
+.aotr-background {
+  background:
+    radial-gradient(ellipse at center, rgba(240,213,138,0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #0b0b0d 0%, #050506 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-/* small stars */
-#stars {
-  box-shadow: var(--shadows-small);
-  animation: animStar 50s linear infinite;
-}
-
-/* medium stars */
-#stars2 {
-  width: 100vw;
-  height: calc(var(--vh) * 100);
-  box-shadow: var(--shadows-medium);
-  animation: animStar 100s linear infinite;
-}
-
-/* big stars */
-#stars3 {
-  width: 100vw;
-  height: calc(var(--vh) * 100);
-  box-shadow: var(--shadows-big);
-  animation: animStar 150s linear infinite;
-}
-
-/* repeated stars for scroll */
-#stars:after,
-#stars2:after,
-#stars3:after {
+/* Gold grid overlay */
+.aotr-background::before {
   content: "";
   position: absolute;
-  top: 2000px;
-  left: 0;
-  width: 100vw;
-  height: calc(var(--vh) * 100);
-  box-shadow: inherit;
-}
-
-
-/* Animation */
-@keyframes animStar {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-2000px);
-  }
-}
-
-/* === JS-generated star shadows === */
-:root {
-  --shadows-small: 0 0 #fff;
-  --shadows-medium: 0 0 #fff;
-  --shadows-big: 0 0 #fff;
+  inset: 0;
+  background-image: url('/gridd.svg');
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
