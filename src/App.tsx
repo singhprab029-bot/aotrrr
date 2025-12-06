@@ -116,53 +116,45 @@ useEffect(() => {
 
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[radial-gradient(ellipse_at_bottom,#1B2735_0%,#090A0F_100%)]">
+  <div className="min-h-screen relative aotr-background">
 
-      {/* ⭐ PIXEL STARFIELD LAYERS (GOES HERE AT THE VERY TOP) */}
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
+    {/* CONTENT ABOVE BACKGROUND */}
+    <div className="relative z-10">
 
-      {/* ⭐ CONTENT ABOVE STARFIELD */}
-      <div className="relative z-10">
+      {!isAdminPage && <Header />}
+      {maintenanceMode && !isAdminPage && <MaintenancePopup />}
 
-        {!isAdminPage && <Header />}
-        {maintenanceMode && !isAdminPage && <MaintenancePopup />}
+      <main>
+        <div className="container mx-auto px-4 py-4">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<Home items={items} />} />
+              <Route path="/calculator" element={<TradeCalculator items={items} />} />
+              <Route path="/value-list" element={<ValueListPage items={items} />} />
+              <Route path="/value-changes" element={<ValueChangesPage />} />
+              <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
+              <Route path="/scam-logs" element={<ScamLogsPage />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
 
-        <main>
-          <div className="container mx-auto px-4 py-4">
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<Home items={items} />} />
-                <Route path="/calculator" element={<TradeCalculator items={items} />} />
-                <Route path="/value-list" element={<ValueListPage items={items} />} />
-                <Route path="/value-changes" element={<ValueChangesPage />} />
-                <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
-                <Route path="/scam-logs" element={<ScamLogsPage />} />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <AdminPage
+                      maintenanceMode={maintenanceMode}
+                      onMaintenanceModeChange={toggleMaintenanceMode}
+                    />
+                  </ProtectedRoute>
+                }
+              />
 
-                {/* OAuth callback */}
-                <Route path="/auth/callback" element={<AuthCallback />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </main>
 
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute>
-                      <AdminPage
-                        maintenanceMode={maintenanceMode}
-                        onMaintenanceModeChange={toggleMaintenanceMode}
-                      />
-                    </ProtectedRoute>
-                  }
-                />
-
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </Suspense>
-          </div>
-        </main>
-
-        {!isAdminPage && <Footer />}
-      </div>
+      {!isAdminPage && <Footer />}
     </div>
-  );
-};
+  </div>
+);
