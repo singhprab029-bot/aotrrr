@@ -233,22 +233,21 @@
   opacity: 0;
 }
 
-/* Premium AOTR Gradient Background */
 .aotr-background {
-  background:
-    radial-gradient(ellipse at center, rgba(240,213,138,0.05) 0%, transparent 70%),
-    linear-gradient(180deg, #0b0b0d 0%, #050506 100%);
   position: relative;
   overflow: hidden;
+  background: #070708; /* base dark bg */
 }
 
-/* Gold grid overlay */
+/* GLOBAL GRID */
 .aotr-background::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/gridd.svg');
-  opacity: 0.12;
-  mix-blend-mode: soft-light;
+  background-image: url("/gridd.svg");
+  background-size: 500px 500px; /* adjust grid density */
+  opacity: 0.10; /* grid visibility */
   pointer-events: none;
+  mix-blend-mode: soft-light;
 }
+
