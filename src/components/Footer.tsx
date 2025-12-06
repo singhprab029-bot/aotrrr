@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
 
           {/* Navigation */}
           <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
+            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3">
               Navigation
             </h3>
             <ul className="space-y-2 text-sm">
@@ -73,7 +73,7 @@ export const Footer: React.FC = () => {
 
           {/* Community */}
           <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
+            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 ">
               Community
             </h3>
             <ul className="space-y-2 text-sm">
@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
 
           {/* Support */}
           <div>
-            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3 drop-shadow-[0_0_4px_rgba(255,215,100,0.4)]">
+            <h3 className="text-[var(--gold-bright)] font-semibold text-sm mb-3">
               Support
             </h3>
             <ul className="space-y-2 text-sm">
