@@ -7,12 +7,12 @@
 /* ========================= */
 
 :root {
---gold-soft: #8b6a33;
---gold-bright: #b9994f;
---gold-border: #705428;
---gold-dark: #4f3b1e;
-
+  --gold-soft: #927337;      /* soft gold, darker */
+  --gold-bright: #c4a04a;    /* bright gold, richer but still gold */
+  --gold-border: #6f572c;    /* deeper border */
+  --gold-dark: #4b3a1d;      /* dark gold shadow */
 }
+
 
 
 /* Text Utilities */
