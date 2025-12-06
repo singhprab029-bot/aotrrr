@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
           {/* Brand */}
           <div className="col-span-2 sm:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-3xl text-[var(--gold-bright)] drop-shadow-[0_0_6px_rgba(255,215,100,0.6)]">⚔️</span>
+              <span className="text-3xl text-[var(--gold-bright)] ">⚔️</span>
               <h2 className="text-xl font-bold text-[var(--gold-bright)]">AOT:R Value Hub</h2>
             </div>
 
