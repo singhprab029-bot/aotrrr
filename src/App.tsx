@@ -50,7 +50,6 @@ export default function App() {
   );
 }
 
-/* ⭐ APP CONTENT */
 export const AppContent: React.FC = () => {
   const { items } = useItems();
   const [maintenanceMode, setMaintenanceMode] = useState(false);
@@ -69,92 +68,47 @@ export const AppContent: React.FC = () => {
 
   const isAdminPage = location.pathname === "/admin";
 
-useEffect(() => {
-  const setVh = () => {
-    document.documentElement.style.setProperty(
-      "--vh",
-      `${window.innerHeight * 0.01}px`
-    );
-  };
-
-  const regenerateStars = () => {
-    const width = window.innerWidth * 1.5;
-    const height = window.innerHeight * 1.5;
-
-    function generate(count: number) {
-      let result = "";
-      for (let i = 0; i < count; i++) {
-        result += `${Math.random() * width}px ${Math.random() * height}px #FFF, `;
-      }
-      return result.slice(0, -2);
-    }
-
-    document.documentElement.style.setProperty("--shadows-small", generate(700));
-    document.documentElement.style.setProperty("--shadows-medium", generate(250));
-    document.documentElement.style.setProperty("--shadows-big", generate(120));
-  };
-
-  setVh();
-  regenerateStars();
-
-  window.addEventListener("resize", () => {
-    setVh();
-    regenerateStars();
-  });
-
-  window.addEventListener("orientationchange", () => {
-    setVh();
-    regenerateStars();
-  });
-
-  return () => {
-    window.removeEventListener("resize", setVh);
-    window.removeEventListener("orientationchange", setVh);
-  };
-}, []);
-
-
-
   return (
-  <div className="min-h-screen relative aotr-background">
+    <div className="min-h-screen relative aotr-background">
 
-    {/* CONTENT ABOVE BACKGROUND */}
-    <div className="relative z-10">
+      {/* CONTENT ABOVE BACKGROUND */}
+      <div className="relative z-10">
 
-      {!isAdminPage && <Header />}
-      {maintenanceMode && !isAdminPage && <MaintenancePopup />}
+        {!isAdminPage && <Header />}
+        {maintenanceMode && !isAdminPage && <MaintenancePopup />}
 
-      <main>
-        <div className="container mx-auto px-4 py-4">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<Home items={items} />} />
-              <Route path="/calculator" element={<TradeCalculator items={items} />} />
-              <Route path="/value-list" element={<ValueListPage items={items} />} />
-              <Route path="/value-changes" element={<ValueChangesPage />} />
-              <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
-              <Route path="/scam-logs" element={<ScamLogsPage />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
+        <main>
+          <div className="container mx-auto px-4 py-4">
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                <Route path="/" element={<Home items={items} />} />
+                <Route path="/calculator" element={<TradeCalculator items={items} />} />
+                <Route path="/value-list" element={<ValueListPage items={items} />} />
+                <Route path="/value-changes" element={<ValueChangesPage />} />
+                <Route path="/trade-ads" element={<TradeAdsPage items={items} />} />
+                <Route path="/scam-logs" element={<ScamLogsPage />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
 
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <AdminPage
-                      maintenanceMode={maintenanceMode}
-                      onMaintenanceModeChange={toggleMaintenanceMode}
-                    />
-                  </ProtectedRoute>
-                }
-              />
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminPage
+                        maintenanceMode={maintenanceMode}
+                        onMaintenanceModeChange={toggleMaintenanceMode}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </div>
-      </main>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Suspense>
+          </div>
+        </main>
 
-      {!isAdminPage && <Footer />}
+        {!isAdminPage && <Footer />}
+      </div>
     </div>
-  </div>
-);
+  );
+};
