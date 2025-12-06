@@ -10,33 +10,28 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
   const [viewMode, setViewMode] = useState<"regular" | "permanent">("regular");
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-16 text-center">
 
-      {/* PAGE TITLE */}
-      <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--gold-bright)] text-center drop-shadow-lg">
+      <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
         AOT:R Value List
       </h1>
 
-      <p className="text-gray-400 max-w-3xl mx-auto text-center mt-3 mb-12">
-        Browse all current AOT:R items ({items.length}+ total).  
-        <span className="text-[var(--gold-soft)] font-semibold">  
-          Values may be slightly outdated — join our Discord for accurate updates.
-        </span>
+      <p className="text-gray-400 max-w-2xl mx-auto mb-12">
+  Browse our complete AOT:R value list ({items.length}+ items).  
+  <span className="text-yellow-400 font-semibold">Warning:</span> Values are temporarily outdated — join Discord for verified prices.
       </p>
 
-      {/* MODE SWITCHER */}
-      <div className="mb-12 text-center">
-        <h3 className="text-[var(--gold-bright)] font-semibold mb-3">
-          Display Mode
-        </h3>
 
-        <div className="inline-flex rounded-xl overflow-hidden border border-[rgba(255,220,150,0.15)] bg-[#111]/60 backdrop-blur-md shadow-lg">
+      <div className="mb-12">
+        <h3 className="text-white font-semibold mb-3">Default View Mode</h3>
+
+        <div className="inline-flex bg-gray-900 border border-gray-700 rounded-lg overflow-hidden">
           <button
             onClick={() => setViewMode("regular")}
-            className={`px-6 py-2 font-medium transition-all ${
+            className={`px-6 py-2 font-medium ${
               viewMode === "regular"
-                ? "bg-[var(--gold-bright)] text-black shadow-inner"
-                : "text-[var(--gold-soft)] hover:bg-[#1c1c1c]"
+                ? "bg-purple-600 text-white"
+                : "text-gray-300 hover:bg-gray-800"
             }`}
           >
             Keys
@@ -44,10 +39,10 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
 
           <button
             onClick={() => setViewMode("permanent")}
-            className={`px-6 py-2 font-medium transition-all ${
+            className={`px-6 py-2 font-medium ${
               viewMode === "permanent"
-                ? "bg-[var(--gold-bright)] text-black shadow-inner"
-                : "text-[var(--gold-soft)] hover:bg-[#1c1c1c]"
+                ? "bg-purple-600 text-white"
+                : "text-gray-300 hover:bg-gray-800"
             }`}
           >
             Vizard
@@ -55,14 +50,11 @@ export const ValueListPage: React.FC<ValueListPageProps> = ({ items }) => {
         </div>
 
         <p className="text-gray-500 text-sm mt-2">
-          Switch how item values are displayed across the list.
+          Sets the default display mode for all items.
         </p>
       </div>
 
-      {/* ITEM GRID */}
-      <div className="mt-10">
-        <ItemFlipGrid items={items} mode={viewMode} />
-      </div>
+      <ItemFlipGrid items={items} mode={viewMode} />
     </div>
   );
 };
