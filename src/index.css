@@ -7,10 +7,11 @@
 /* ========================= */
 
 :root {
-  --gold-soft: #a38444;     /* darker soft gold */
-  --gold-bright: #d4b46a;   /* deeper bright gold */
-  --gold-border: #8a6e3b;   /* darker borders */
-  --gold-dark: #6d532e;     /* deep brown-gold */
+ --gold-soft: #9e8b57;
+--gold-bright: #c6ae6b;
+--gold-border: #8a784c;
+--gold-dark: #5f5335;
+
 }
 
 
