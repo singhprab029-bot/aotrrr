@@ -13,8 +13,6 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ items }) => {
   return (
     <div className="relative">
-      {/* WHITE GRID BACKGROUND */}
-      <div className="absolute inset-0 bg-[url('/gridd.svg')] opacity-10 mix-blend-soft-light pointer-events-none" />
 
       {/* MAIN CONTENT */}
       <div className="relative z-10">
