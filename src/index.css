@@ -7,13 +7,12 @@
 /* ========================= */
 
 :root {
-  --gold-soft: #c8a96d;
-  --gold-bright: #f0d58a;
-  --gold-border: #b0884d;
-  --gold-dark: #8c6b3d;
-  --star-color: #f0d58a;
-  --vh: 1vh;
+  --gold-soft: #a38444;     /* darker soft gold */
+  --gold-bright: #d4b46a;   /* deeper bright gold */
+  --gold-border: #8a6e3b;   /* darker borders */
+  --gold-dark: #6d532e;     /* deep brown-gold */
 }
+
 
 /* Text Utilities */
 .text-gold {
