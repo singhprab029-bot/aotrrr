@@ -13,8 +13,6 @@
   --gold-dark: #4b3a1d;      /* dark gold shadow */
 }
 
-
-
 /* Text Utilities */
 .text-gold {
   color: var(--gold-soft);
@@ -233,24 +231,22 @@
   opacity: 0;
 }
 
-/* MAIN DARK BACKGROUND */
+/* Premium AOTR Gradient Background */
 .aotr-background {
+  background:
+    radial-gradient(ellipse at center, rgba(240,213,138,0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #0b0b0d 0%, #050506 100%);
   position: relative;
-  background: radial-gradient(circle at 50% 20%, #111 0%, #050505 70%, #000 100%);
   overflow: hidden;
 }
 
-/* WHITE GRID LINES */
+/* Gold grid overlay */
 .aotr-background::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("/gridd.svg");
-  background-size: 500px 500px; /* adjust density */
-  opacity: 0.15;
-  pointer-events: none;
+  background-image: url('/gridd.svg');
+  opacity: 0.12;
   mix-blend-mode: soft-light;
-  z-index: 0;
+  pointer-events: none;
 }
-
-
